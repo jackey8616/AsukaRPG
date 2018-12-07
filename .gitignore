@@ -1,0 +1,9 @@
+.idea/
+Lib/
+Libs/
+lib/
+out/
+target/
+BuildTool/
+
+AsukaRPG.iml

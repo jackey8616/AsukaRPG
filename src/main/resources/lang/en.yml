@@ -1,0 +1,7 @@
+Server_Is_Fixing: 'Server is still fixing.'
+
+Need_Change_Fish_Loc: 'You can not keep fishing in same place.'
+Minecart_Fishing: 'I think fishing on a minecart is not a good idea.'
+
+Loss_Prevented_Success: 'You loss a %s item and successfully keep your inventory and experiences.'
+Loss_Prevented_Fail: 'You loss a %s item and failed keep your inventory and experiences.'

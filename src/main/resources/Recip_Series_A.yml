@@ -1,0 +1,8 @@
+# - R:RECIPE_A:
+#   ItemKey: DEFAULT_STONE
+#   Recipe:
+- R:RECIPE_A:
+  ItemKey: DEFAULT_STONE
+  Recipe:
+  - id:sub_id display_name quantity
+  - id:r,g,b display_name quantity

@@ -1,0 +1,23 @@
+- Default_Stone:
+    ItemKey: DEFAULT_STONE
+    ItemID: ''
+    Quantity: 1
+
+- Default_Sword:
+    ItemKey: DEFAULT_SWORD
+    # Type one (Single recipe from recipe folder.)
+    Recipe: R:RECIPE_A
+    # Type Two (Multiple recipe from recipe folder.)
+    Recipe:
+    - R:RECIPE_A
+    - R:RECIPE_B
+    # Type Three (Manual set up ingredient.)
+    Recipe:
+    - 0 0
+    - 1 DEFAULT_STONE
+    - 0 0
+    - 0 0
+    - 1 DEFAULT_STONE
+    - 0 0
+    - 1 WOOD
+    - 0 0
