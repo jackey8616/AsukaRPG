@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class AsukaRPG extends JavaPlugin {
 
-    public static final Logger logger = Logger.getLogger("Minecraft");
+    public static final Logger logger = Logger.getLogger("Minecraft.AsukaRPG");
     public static AsukaRPG INSTANCE;
 
     public ConfigManager configManager;

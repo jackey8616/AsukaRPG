@@ -42,6 +42,22 @@
             <systemPath>${basedir}/lib/craftbukkit-1.12.2.jar</systemPath>
             <scope>system</scope>
         </dependency>
+        <!--JUnit-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+        <!--AssertJ-->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.11.1</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -84,6 +100,18 @@
                 <version>3.1.0</version>
                 <configuration>
                     <outputDirectory>${output_dir}</outputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                    <check />
                 </configuration>
             </plugin>
         </plugins>

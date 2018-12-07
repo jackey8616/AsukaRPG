@@ -1,6 +1,7 @@
 package info.clo5de.asukarpg.item;
 
 import com.google.common.primitives.Ints;
+import info.clo5de.asukarpg.AsukaRPG;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,21 +12,26 @@ public class ItemID {
     }
 
     public static ItemID fromConfig (String configString) {
-        try {
-            String[] idAndSub = configString.split(":");
-            String id = idAndSub[0];
-            byte subId = idAndSub.length == 2 ? Byte.parseByte(idAndSub[1]) :0;
+        String[] idAndSub = configString.split(":");
+        String id = idAndSub[0];
+        byte subId = 0;
 
-            if (Ints.tryParse(id) != null) {
-                return new ItemID(Integer.valueOf(id), subId);
+        if (idAndSub.length == 2 && Ints.tryParse(idAndSub[1]) != null)
+            subId = Byte.parseByte(idAndSub[1]);
+        else
+            AsukaRPG.logger.warning(configString + " Missing subId, automatically set to 0");
+
+        if (Ints.tryParse(id) != null) {
+            return new ItemID(Integer.valueOf(id), subId);
+        } else {
+            Material material = Material.matchMaterial(id);
+            if (material != null) {
+                return new ItemID(material, subId);
             } else {
-                return new ItemID(id, subId);
+                AsukaRPG.logger.warning(String.format("No match ID: %s, aborted.", id));
+                return null;
             }
-
-        } catch (Exception e) {
-            ;
         }
-        return null;
     }
 
     private Material material;
@@ -33,10 +39,6 @@ public class ItemID {
 
     public ItemID (int id, byte subId) {
         this(Material.getMaterial(id), subId);
-    }
-
-    public ItemID (String name, byte subId) {
-        this(Material.getMaterial(name), subId);
     }
 
     public ItemID (Material material, byte subId) {
