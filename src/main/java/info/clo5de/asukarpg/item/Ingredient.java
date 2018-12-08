@@ -13,7 +13,7 @@ public class Ingredient {
     public static Ingredient fromConfig (String configString) {
         String[] split = configString.split(" ");
         if (split[0].startsWith("I:")) { // MeowItem
-            MeowItem meowItem = AsukaRPG.INSTANCE.getItemHandler().getItem(
+            MeowItem meowItem = AsukaRPG.INSTANCE.getItemHandler().getItemByKey(
                     split[0].replace("I:", ""));
             if (meowItem != null)
                 return new Ingredient(meowItem, split.length == 2 ? Integer.parseInt(split[1]) : 1);

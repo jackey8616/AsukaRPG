@@ -39,7 +39,7 @@ public class Handler {
 
     private AsukaRPG plugin;
     private final File itemFolder;
-    public Map<String, MeowItem> items = new HashMap<>();
+    private Map<String, MeowItem> items = new HashMap<>();
 
     public Handler(AsukaRPG plugin) {
         this.plugin = plugin;
@@ -48,15 +48,15 @@ public class Handler {
 
     public void load () {
         if (!this.itemFolder.exists()) {
-            this.itemFolder.mkdir();
+            this.itemFolder.mkdirs();
         } else {
             ArrayList<File> itemFiles = new ArrayList<>(Arrays.asList(this.itemFolder.listFiles()));
             itemFiles.removeIf(file -> !file.getName().endsWith(".yml"));
             for (File file : itemFiles)
                 this.items.putAll(loadFromYaml(file));
             for (Map.Entry<String, MeowItem> entry : this.items.entrySet()) {
+                entry.getValue().buildItemStack();
                 if (entry.getValue().getItemRecipe() != null) {
-                    entry.getValue().buildItemStack();
                     entry.getValue().buildItemRecipe();
                     System.out.println(entry.getKey() + " built recipe");
                 }
@@ -64,7 +64,11 @@ public class Handler {
         }
     }
 
-    public MeowItem getItem (String itemKey) {
+    public Map<String, MeowItem> getItemMap () {
+        return this.items;
+    }
+
+    public MeowItem getItemByKey (String itemKey) {
         return this.items.get(itemKey);
     }
 

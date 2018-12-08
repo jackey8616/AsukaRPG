@@ -25,7 +25,7 @@ public class TestIngredient {
         handler = mock(info.clo5de.asukarpg.item.Handler.class);
         meowItem = mock(MeowItem.class);
 
-        when(handler.getItem("key")).thenReturn(meowItem);
+        when(handler.getItemByKey("key")).thenReturn(meowItem);
         when(meowItem.getItemID()).thenReturn(itemID);
         when(meowItem.getDisplayName()).thenReturn("name");
         when(asukaRPG.getItemHandler()).thenReturn(handler);
@@ -46,7 +46,7 @@ public class TestIngredient {
     public void testFromConfig () {
         assertThat(Ingredient.fromConfig("I:key")).isNotNull();
         assertThat(Ingredient.fromConfig("I:key 1")).isNotNull();
-        when(handler.getItem("key")).thenReturn(null);
+        when(handler.getItemByKey("key")).thenReturn(null);
         assertThat(Ingredient.fromConfig("I:key")).isNull();
         assertThat(Ingredient.fromConfig("I:key 1")).isNull();
 

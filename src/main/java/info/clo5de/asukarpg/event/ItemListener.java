@@ -9,15 +9,12 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 
-import static org.bukkit.Bukkit.getServer;
-
 public class ItemListener implements Listener {
 
     private AsukaRPG plugin;
 
     public ItemListener (AsukaRPG plugin) {
         this.plugin = plugin;
-        getServer().getPluginManager().registerEvents(this, this.plugin);
     }
 
     @EventHandler
