@@ -1,0 +1,12 @@
+AsukaRPG:
+  ItemAsukaTestKey:
+    DisplayName: ItemAsukaTestName
+    ItemID: stone:0
+    ItemRecipe:
+    - stone:0 ItemAsukaTestName
+    ItemLore:
+    - LoreA
+    - LoreB
+    - LoreC
+    ItemEnchant:
+    - PROTECTION_ENVIRONMENTAL:1

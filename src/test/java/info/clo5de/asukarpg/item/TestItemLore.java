@@ -26,8 +26,8 @@ public class TestItemLore {
 
     @Test
     public void testFromConfig () {
-        assertThat(ItemLore.fromConfig(new ArrayList<>())).isEqualTo(null);
-        assertThat(itemLore).isNotEqualTo(null);
+        assertThat(ItemLore.fromConfig(null)).isNull();
+        assertThat(ItemLore.fromConfig((ArrayList<String>) list.clone())).isNotNull();
     }
 
     @Test

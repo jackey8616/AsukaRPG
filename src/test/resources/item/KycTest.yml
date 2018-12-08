@@ -1,0 +1,12 @@
+CustomCrafterEx:
+  ItemKycTestName:
+    ItemKey: ItemKycTestKey
+    Materials:
+    - stone:1 ItemKycTestName
+    ItemID: stone:1
+    ItemLores:
+    - LoreA
+    - LoreB
+    - LoreC
+    Enchants:
+    - PROTECTION_ENVIRONMENTAL:1

@@ -86,4 +86,12 @@ public class TestItemID {
         assertThat(i297.makeItemStack().getType()).isNotEqualByComparingTo(
                 one_one.makeItemStack().getType());
     }
+
+    @Test
+    public void testEquals () {
+        // Same material(id), different sub id.
+        assertThat(new ItemID(1, (byte) 0).equals(new ItemID(1, (byte) 1))).isFalse();
+        // Different material(id), same sub id.
+        assertThat(new ItemID(2, (byte) 0).equals(new ItemID(3, (byte) 0))).isFalse();
+    }
 }

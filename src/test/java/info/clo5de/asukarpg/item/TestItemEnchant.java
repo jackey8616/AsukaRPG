@@ -29,7 +29,6 @@ public class TestItemEnchant {
 
     @Test
     public void testFromConfig () {
-        assertThat(itemEnchant).isNotNull();
         assertThat(ItemEnchant.fromConfig(null)).isNull();
         assertThat(ItemEnchant.fromConfig(new ArrayList<>())).isNull();
 

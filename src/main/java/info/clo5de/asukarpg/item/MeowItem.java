@@ -12,15 +12,14 @@ public class MeowItem {
         String displayName = config.getString("DisplayName");
         ItemID itemID = ItemID.fromConfig(config.getString("ItemID"));
         ItemColor itemColor = ItemColor.fromConfig(config);
-        ItemLore itemLore = ItemLore.fromConfig(config.getList("ItemLore"));
-        ItemEnchant itemEnchant = ItemEnchant.fromConfig(config.getList("Enchants"));
-        ItemRecipe itemRecipe = ItemRecipe.fromKycConfig(itemKey, config.getList("Recipe"));
+        ItemLore itemLore = ItemLore.fromConfig(config.getStringList("ItemLore"));
+        ItemEnchant itemEnchant = ItemEnchant.fromConfig(config.getList("ItemEnchant"));
+        ItemRecipe itemRecipe = ItemRecipe.fromKycConfig(itemKey, config.getList("ItemRecipe"));
 
         int quantity = config.getInt("Quantity", 1);
         boolean canCraft = config.getBoolean("CanCraft", true);
         boolean unbreakable = config.getBoolean("Unbreakable", false);
         boolean hideEnchants = config.getBoolean("HideEnchants", false);
-
 
         return new MeowItem(itemKey, displayName, itemID, itemColor, itemLore, itemEnchant, itemRecipe, quantity,
                 canCraft, unbreakable, hideEnchants);
@@ -30,7 +29,7 @@ public class MeowItem {
         String itemKey = config.getString("ItemKey");
         ItemID itemID = ItemID.fromConfig(config.getString("ItemID"));
         ItemColor itemColor = ItemColor.fromKycConfig(config);
-        ItemLore itemLore = ItemLore.fromConfig(config.getList("ItemLores"));
+        ItemLore itemLore = ItemLore.fromConfig(config.getStringList("ItemLores"));
         ItemEnchant itemEnchant = ItemEnchant.fromConfig(config.getList("Enchants"));
         ItemRecipe itemRecipe = ItemRecipe.fromKycConfig(itemKey, config.getList("Materials"));
 
@@ -38,7 +37,6 @@ public class MeowItem {
         boolean canCraft = config.getBoolean("CanCraft", true);
         boolean unbreakable = config.getBoolean("Unbreakable", false);
         boolean hideEnchants = config.getBoolean("HideEnchants", false);
-
 
         return new MeowItem(itemKey, displayName, itemID, itemColor, itemLore, itemEnchant, itemRecipe, quantity,
                 canCraft, unbreakable, hideEnchants);
@@ -58,7 +56,7 @@ public class MeowItem {
     private boolean hideEnchants;
     private ItemStack itemStack;
 
-    public MeowItem (String itemKEy, String displayName, ItemID itemID, ItemColor itemColor, ItemLore itemLore,
+    public MeowItem (String itemKey, String displayName, ItemID itemID, ItemColor itemColor, ItemLore itemLore,
                      ItemEnchant itemEnchant, ItemRecipe itemRecipe, int quantity, boolean canCraft,
                      boolean unbreakable, boolean hideEnchants) {
         this.itemKey = itemKey;
@@ -73,7 +71,6 @@ public class MeowItem {
         this.canCraft = canCraft;
         this.unbreakable = unbreakable;
         this.hideEnchants = hideEnchants;
-        this.itemStack = this.buildItemStack();
     }
 
     public ItemStack buildItemStack () {
@@ -95,11 +92,13 @@ public class MeowItem {
 
         itemStack.setAmount(this.quantity);
         itemStack.setItemMeta(itemMeta);
-        return itemStack;
+        this.itemStack = itemStack;
+        return this.itemStack;
     }
 
-    public void buildItemRecipe () {
+    public ItemMeta buildItemRecipe () {
         this.itemRecipe.buildItemRecipe(this.itemStack);
+        return this.itemStack.getItemMeta();
     }
 
     public String getDisplayName () {
@@ -119,11 +118,11 @@ public class MeowItem {
     }
 
     public ItemLore getItemLore() {
-        return this.getItemLore();
+        return this.itemLore;
     }
 
     public ItemEnchant getItemEnchant () {
-        return this.getItemEnchant();
+        return this.itemEnchant;
     }
 
     public ItemRecipe getItemRecipe () {

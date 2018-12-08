@@ -8,9 +8,10 @@ import java.util.List;
 
 public class ItemLore {
 
-    public static ItemLore fromConfig (List list) {
-        return (list == null || list.size() == 0) ? null :
-                new ItemLore((String[]) list.toArray(new String[list.size()]));
+    public static ItemLore fromConfig (List<String> list) {
+        if (list == null)
+            return null;
+        return new ItemLore((String[]) list.toArray(new String[list.size()]));
     }
 
     private String[] lines;

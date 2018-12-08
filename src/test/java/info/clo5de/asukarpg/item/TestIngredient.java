@@ -44,7 +44,6 @@ public class TestIngredient {
 
     @Test
     public void testFromConfig () {
-        assertThat(ingredient).isNotNull();
         assertThat(Ingredient.fromConfig("I:key")).isNotNull();
         assertThat(Ingredient.fromConfig("I:key 1")).isNotNull();
         when(handler.getItem("key")).thenReturn(null);
@@ -92,5 +91,13 @@ public class TestIngredient {
     @Test
     public void testGetQuantity () {
         assertThat(ingredient.getQuantity()).isEqualTo(1);
+    }
+
+    @Test
+    public void testEquals () {
+        assertThat(ingredient.equals(new Ingredient(meowItem, 1))).isTrue();
+        MeowItem another = mock(MeowItem.class);
+        when(another.getItemID()).thenReturn(mock(ItemID.class));
+        assertThat(ingredient.equals(new Ingredient(another, 1))).isFalse();
     }
 }

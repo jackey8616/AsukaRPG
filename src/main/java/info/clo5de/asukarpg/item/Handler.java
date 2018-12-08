@@ -21,7 +21,7 @@ public class Handler {
             return loadFromKycYaml((MemorySection) yaml.get("CustomCrafterEx"));
         } else {
             Map<String, MeowItem> stacks = new HashMap<>();
-            for (String itemKey : yaml.getKeys(false))
+            for (String itemKey : ((MemorySection) yaml.get("AsukaRPG")).getKeys(false))
                 stacks.put(itemKey, MeowItem.fromConfig(itemKey, (MemorySection) yaml.get(itemKey)));
             return stacks;
         }
@@ -56,6 +56,7 @@ public class Handler {
                 this.items.putAll(loadFromYaml(file));
             for (Map.Entry<String, MeowItem> entry : this.items.entrySet()) {
                 if (entry.getValue().getItemRecipe() != null) {
+                    entry.getValue().buildItemStack();
                     entry.getValue().buildItemRecipe();
                     System.out.println(entry.getKey() + " built recipe");
                 }
