@@ -20,7 +20,7 @@ public class Handler {
     }
 
     public void loadItemRecipes () {
-        for (Map.Entry<String, MeowItem> meowItem : this.plugin.itemHandler.items.entrySet())
+        for (Map.Entry<String, MeowItem> meowItem : this.plugin.getItemHandler().items.entrySet())
             if (meowItem.getValue().getItemRecipe() != null)
                 this.recipes.put(meowItem.getKey(), meowItem.getValue().getItemRecipe());
     }

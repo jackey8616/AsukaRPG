@@ -69,4 +69,7 @@ public class ItemID {
             return new ItemStack(this.material);
     }
 
+    public boolean equals (ItemID itemID) {
+        return this.material.equals(itemID.getMaterial()) && this.subId == itemID.getSubId();
+    }
 }

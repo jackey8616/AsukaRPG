@@ -11,8 +11,8 @@ public class MeowItem {
     public static MeowItem fromConfig (String itemKey, MemorySection config) {
         String displayName = config.getString("DisplayName");
         ItemID itemID = ItemID.fromConfig(config.getString("ItemID"));
-        ItemColor itemColor = ItemColor.fromKycConfig(config);
-        ItemLores itemLores = ItemLores.fromKycConfig(config.getList("ItemLores"));
+        ItemColor itemColor = ItemColor.fromConfig(config);
+        ItemLore itemLore = ItemLore.fromConfig(config.getList("ItemLore"));
         ItemEnchant itemEnchant = ItemEnchant.fromConfig(config.getList("Enchants"));
         ItemRecipe itemRecipe = ItemRecipe.fromKycConfig(itemKey, config.getList("Recipe"));
 
@@ -22,7 +22,7 @@ public class MeowItem {
         boolean hideEnchants = config.getBoolean("HideEnchants", false);
 
 
-        return new MeowItem(itemKey, displayName, itemID, itemColor, itemLores, itemEnchant, itemRecipe, quantity,
+        return new MeowItem(itemKey, displayName, itemID, itemColor, itemLore, itemEnchant, itemRecipe, quantity,
                 canCraft, unbreakable, hideEnchants);
     }
 
@@ -30,7 +30,7 @@ public class MeowItem {
         String itemKey = config.getString("ItemKey");
         ItemID itemID = ItemID.fromConfig(config.getString("ItemID"));
         ItemColor itemColor = ItemColor.fromKycConfig(config);
-        ItemLores itemLores = ItemLores.fromKycConfig(config.getList("ItemLores"));
+        ItemLore itemLore = ItemLore.fromConfig(config.getList("ItemLore"));
         ItemEnchant itemEnchant = ItemEnchant.fromConfig(config.getList("Enchants"));
         ItemRecipe itemRecipe = ItemRecipe.fromKycConfig(itemKey, config.getList("Materials"));
 
@@ -40,7 +40,7 @@ public class MeowItem {
         boolean hideEnchants = config.getBoolean("HideEnchants", false);
 
 
-        return new MeowItem(itemKey, displayName, itemID, itemColor, itemLores, itemEnchant, itemRecipe, quantity,
+        return new MeowItem(itemKey, displayName, itemID, itemColor, itemLore, itemEnchant, itemRecipe, quantity,
                 canCraft, unbreakable, hideEnchants);
     }
 
@@ -48,7 +48,7 @@ public class MeowItem {
     private String displayName;
     private ItemID itemID;
     private ItemColor itemColor;
-    private ItemLores itemLores;
+    private ItemLore itemLore;
     private ItemEnchant itemEnchant;
     private ItemRecipe itemRecipe;
 
@@ -58,14 +58,14 @@ public class MeowItem {
     private boolean hideEnchants;
     private ItemStack itemStack;
 
-    public MeowItem (String itemKEy, String displayName, ItemID itemID, ItemColor itemColor, ItemLores itemLores,
+    public MeowItem (String itemKEy, String displayName, ItemID itemID, ItemColor itemColor, ItemLore itemLore,
                      ItemEnchant itemEnchant, ItemRecipe itemRecipe, int quantity, boolean canCraft,
                      boolean unbreakable, boolean hideEnchants) {
         this.itemKey = itemKey;
         this.displayName = displayName;
         this.itemID = itemID;
         this.itemColor = itemColor;
-        this.itemLores = itemLores;
+        this.itemLore = itemLore;
         this.itemEnchant = itemEnchant;
         this.itemRecipe = itemRecipe;
 
@@ -80,14 +80,13 @@ public class MeowItem {
         ItemStack itemStack = this.itemID.makeItemStack();
         ItemMeta itemMeta = itemStack.getItemMeta();
 
-        if (itemColor != null && itemID.isLeather())
-            itemStack = itemColor.applyColor(itemStack);
-
         itemMeta.setDisplayName(this.displayName);
+        if (itemColor != null && itemID.isLeather())
+            itemMeta = itemColor.applyColor(itemMeta);
         if (itemEnchant != null)
             itemMeta = itemEnchant.applyEnchant(itemMeta);
-        if (itemLores != null)
-            itemMeta = itemLores.applyLores(itemMeta);
+        if (itemLore != null)
+            itemMeta = itemLore.applyLore(itemMeta);
 
         if (this.unbreakable)
             itemMeta.setUnbreakable(true);
@@ -119,8 +118,8 @@ public class MeowItem {
         return this.itemColor;
     }
 
-    public ItemLores getItemLores () {
-        return this.getItemLores();
+    public ItemLore getItemLore() {
+        return this.getItemLore();
     }
 
     public ItemEnchant getItemEnchant () {

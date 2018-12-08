@@ -10,11 +10,11 @@ public class AsukaRPG extends JavaPlugin {
     public static final Logger logger = Logger.getLogger("Minecraft.AsukaRPG");
     public static AsukaRPG INSTANCE;
 
-    public ConfigManager configManager;
-    public info.clo5de.asukarpg.item.Handler itemHandler;
-    public info.clo5de.asukarpg.recipes.Handler recipeHandler;
+    private ConfigManager configManager;
+    private info.clo5de.asukarpg.item.Handler itemHandler;
+    private info.clo5de.asukarpg.recipes.Handler recipeHandler;
 
-    public ItemListener itemListener;
+    private ItemListener itemListener;
 
     @Override
     public void onEnable () {
@@ -32,5 +32,18 @@ public class AsukaRPG extends JavaPlugin {
 
     @Override
     public void onDisable () {  }
+
+    public ConfigManager getConfigManager () {
+        return this.configManager;
+    }
+    public info.clo5de.asukarpg.item.Handler getItemHandler () {
+        return this.itemHandler;
+    }
+    public info.clo5de.asukarpg.recipes.Handler getRecipeHandler () {
+        return this.recipeHandler;
+    }
+    public ItemListener getItemListener () {
+        return this.itemListener;
+    }
 
 }

@@ -15,13 +15,13 @@ public class TestItemID {
 
     @BeforeClass
     public static void setupBeforeClass () throws Exception {
-        i297 = ItemID.fromConfig("297");
-        i302 = ItemID.fromConfig("302");
-        h = ItemID.fromConfig("leather_helmet:255,255,255");
-        c = ItemID.fromConfig("leather_chestplate:255,255,255");
-        l = ItemID.fromConfig("leather_leggings:255,255,255");
-        b = ItemID.fromConfig("leather_boots:255,255,255");
-        one_one = ItemID.fromConfig("1:1");
+        i297 = new ItemID(297, (byte) 0);
+        i302 = new ItemID(302, (byte) 0);
+        h = new ItemID(Material.matchMaterial("leather_helmet"), (byte) 0);
+        c = new ItemID(Material.matchMaterial("leather_chestplate"), (byte) 0);
+        l = new ItemID(Material.matchMaterial("leather_leggings"), (byte) 0);
+        b = new ItemID(Material.matchMaterial("leather_boots"), (byte) 0);
+        one_one = new ItemID(1, (byte) 1);
     }
 
     @Test

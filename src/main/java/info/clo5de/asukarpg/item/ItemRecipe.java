@@ -12,7 +12,7 @@ import static org.bukkit.Bukkit.getServer;
 public class ItemRecipe {
 
     public static ItemRecipe fromKycConfig (String itemKey, List list) {
-        if (list != null) {
+        if (list != null && list.size() != 0) {
             Ingredient[] ingredients = {
                     Ingredient.AIR(), Ingredient.AIR(), Ingredient.AIR(),
                     Ingredient.AIR(), Ingredient.AIR(), Ingredient.AIR(),
@@ -24,7 +24,7 @@ public class ItemRecipe {
                 String each = (String) list.get(i);
                 if (!each.equalsIgnoreCase("0 0")) {
                     ingredients[i] = Ingredient.fromConfig(each);
-                    isMultistackRecipe = ingredients[i].getQuantity() > 0 ? true : isMultistackRecipe;
+                    isMultistackRecipe = ingredients[i].getQuantity() > 1 ? true : isMultistackRecipe;
                 }
             }
             return new ItemRecipe(itemKey, ingredients, isMultistackRecipe);
@@ -48,25 +48,20 @@ public class ItemRecipe {
 
     public void buildItemRecipe (ItemStack itemStack) {
         if (!isConverted) {
-            try {
-                this.itemStack = itemStack;
-                this.recipe = new ShapedRecipe(new NamespacedKey(AsukaRPG.INSTANCE, itemKey), itemStack);
-                String[] preRecipeShape = {"012", "345", "678"};
-                this.recipe.shape(preRecipeShape);
+            this.itemStack = itemStack;
+            this.recipe = new ShapedRecipe(new NamespacedKey(AsukaRPG.INSTANCE, itemKey), itemStack);
+            String[] preRecipeShape = {"012", "345", "678"};
+            this.recipe.shape(preRecipeShape);
 
-                for (int i = 0; i < ingredients.length; ++i) {
-                    Ingredient ingredient = ingredients[i];
-                    this.recipe.setIngredient(Character.forDigit(i, 10), ingredient.getMaterial(),
-                            ingredient.getMaterial().getMaxDurability() > 0 && ingredient.getItemID().getSubId() == 0 ?
-                                    -1 : ingredient.getItemID().getSubId()
-                    );
-                }
-                getServer().addRecipe(this.recipe);
-                this.isConverted = true;
-            } catch (Exception e) {
-                this.isConverted = false;
-                e.printStackTrace();
+            for (int i = 0; i < ingredients.length; ++i) {
+                Ingredient ingredient = ingredients[i];
+                this.recipe.setIngredient(Character.forDigit(i, 10), ingredient.getMaterial(),
+                        ingredient.getMaterial().getMaxDurability() > 0 && ingredient.getItemID().getSubId() == 0 ?
+                                -1 : ingredient.getItemID().getSubId()
+                );
             }
+            getServer().addRecipe(this.recipe);
+            this.isConverted = true;
         }
     }
 

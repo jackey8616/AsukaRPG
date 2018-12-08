@@ -22,7 +22,7 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onPrepareCraft (PrepareItemCraftEvent event) {
-        for (ItemRecipe itemRecipe : this.plugin.recipeHandler.recipes.values()) {
+        for (ItemRecipe itemRecipe : this.plugin.getRecipeHandler().recipes.values()) {
             if (itemRecipe.isMultistackRecipe()) {
                 ItemStack result = event.getInventory().getResult();
                 if (result != null && itemRecipe.getRecipe().getResult().isSimilar(result)) {
@@ -51,7 +51,7 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onItemCraft (CraftItemEvent event) {
-        for (ItemRecipe itemRecipe : this.plugin.recipeHandler.recipes.values()) {
+        for (ItemRecipe itemRecipe : this.plugin.getRecipeHandler().recipes.values()) {
             if (itemRecipe.isMultistackRecipe()) {
                 ItemStack result = event.getInventory().getResult();
                 if (result != null && itemRecipe.getRecipe().getResult().isSimilar(result)) {

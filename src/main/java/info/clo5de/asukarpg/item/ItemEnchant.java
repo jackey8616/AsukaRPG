@@ -12,18 +12,18 @@ public class ItemEnchant {
 
 
     public static ItemEnchant fromConfig (List list) {
-        if (list != null) {
+        if (list != null && list.size() != 0) {
             Map<Enchantment, Integer> enchantments = new HashMap<>();
             for (int i = 0; i < list.size(); ++i) {
                 String[] line = ((String) list.get(i)).split(":");
-                enchantments.put(Enchantment.getByName(line[0]), Integer.valueOf(line[1]));
+                enchantments.put(Enchantment.getByName(line[0]), line.length >= 2 ? Integer.valueOf(line[1]) : 1);
             }
             return new ItemEnchant(enchantments);
         }
         return null;
     }
 
-    private Map<Enchantment, Integer> enchantment = new HashMap<>();
+    private Map<Enchantment, Integer> enchantment;
 
     public ItemEnchant (Map<Enchantment, Integer> enchantment) {
         this.enchantment = enchantment;

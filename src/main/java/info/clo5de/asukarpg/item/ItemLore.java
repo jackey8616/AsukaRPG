@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemLores {
+public class ItemLore {
 
-    public static ItemLores fromKycConfig (List list) {
-        return list.size() > 0 ? new ItemLores((String[]) list.toArray(new String[list.size()])) : null;
+    public static ItemLore fromConfig (List list) {
+        return list.size() > 0 ? new ItemLore((String[]) list.toArray(new String[list.size()])) : null;
     }
 
     private String[] lines;
 
-    public ItemLores (String ... lines) {
+    public ItemLore(String ... lines) {
         this.lines = lines;
     }
 
@@ -22,7 +22,7 @@ public class ItemLores {
         return new ArrayList<>(Arrays.asList(lines));
     }
 
-    public ItemMeta applyLores (ItemMeta itemMeta) {
+    public ItemMeta applyLore (ItemMeta itemMeta) {
         itemMeta.setLore(toList());
         return itemMeta;
     }
