@@ -30,7 +30,7 @@ public class MeowItem {
         String itemKey = config.getString("ItemKey");
         ItemID itemID = ItemID.fromConfig(config.getString("ItemID"));
         ItemColor itemColor = ItemColor.fromKycConfig(config);
-        ItemLore itemLore = ItemLore.fromConfig(config.getList("ItemLore"));
+        ItemLore itemLore = ItemLore.fromConfig(config.getList("ItemLores"));
         ItemEnchant itemEnchant = ItemEnchant.fromConfig(config.getList("Enchants"));
         ItemRecipe itemRecipe = ItemRecipe.fromKycConfig(itemKey, config.getList("Materials"));
 
