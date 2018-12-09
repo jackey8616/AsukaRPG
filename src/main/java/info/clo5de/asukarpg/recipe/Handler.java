@@ -12,7 +12,7 @@ public class Handler {
 
     private AsukaRPG plugin;
     private final File recipeFolder;
-    public Map<String, ItemRecipe> recipes = new HashMap<>();
+    private Map<String, ItemRecipe> recipes = new HashMap<>();
 
     public Handler (AsukaRPG plugin) {
         this.plugin = plugin;
@@ -23,6 +23,10 @@ public class Handler {
         for (Map.Entry<String, MeowItem> meowItem : this.plugin.getItemHandler().getItemMap().entrySet())
             if (meowItem.getValue().getItemRecipe() != null)
                 this.recipes.put(meowItem.getKey(), meowItem.getValue().getItemRecipe());
+    }
+
+    public Map<String, ItemRecipe> getRecipeMap () {
+        return this.recipes;
     }
 
 }
