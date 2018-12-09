@@ -19,52 +19,64 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onPrepareCraft (PrepareItemCraftEvent event) {
+        if (event.getInventory().getResult() == null)
+            return;
+        ItemStack craftingResult = event.getInventory().getResult();
+
         for (ItemRecipe itemRecipe : this.plugin.getRecipeHandler().getRecipeMap().values()) {
             if (itemRecipe.isMultistackRecipe()) {
-                ItemStack result = event.getInventory().getResult();
-                if (result != null && itemRecipe.getRecipe().getResult().isSimilar(result)) {
-                    result = result.clone();
-                    int count = Integer.MAX_VALUE;
+                if (craftingResult.isSimilar(itemRecipe.getRecipe().getResult())) {
+                    craftingResult = craftingResult.clone();
                     ItemStack[] crafting = event.getInventory().getMatrix();
+                    int count = Integer.MAX_VALUE;
+                    int ingredientAmount, craftingAmount, availableAmount;
+
                     for (int i = 0; i < crafting.length; ++i) {
                         if (crafting[i] == null)
                             continue;
-                        int ingredientAmount = itemRecipe.getIngredient(i).getQuantity();
-                        int craftingAmount = crafting[i].getAmount();
+                        ingredientAmount = itemRecipe.getIngredient(i).getQuantity();
+                        craftingAmount = crafting[i].getAmount();
 
                         if (ingredientAmount > craftingAmount) {
                             event.getInventory().setResult(new ItemStack(Material.AIR));
                             return;
                         }
-                        int availableAmount = craftingAmount / ingredientAmount;
+                        availableAmount = craftingAmount / ingredientAmount;
                         count = count > availableAmount ? availableAmount : count;
                     }
-                    result.setAmount(count == Integer.MAX_VALUE ? 1 : count);
-                    event.getInventory().setResult(result);
+                    craftingResult.setAmount(count == Integer.MAX_VALUE ? 1 : count);
+                    event.getInventory().setResult(craftingResult);
                 }
+                return;
             }
         }
     }
 
     @EventHandler
     public void onItemCraft (CraftItemEvent event) {
+        if (event.getInventory().getResult() == null)
+            return;
+        ItemStack result = event.getInventory().getResult();
+
         for (ItemRecipe itemRecipe : this.plugin.getRecipeHandler().getRecipeMap().values()) {
             if (itemRecipe.isMultistackRecipe()) {
-                ItemStack result = event.getInventory().getResult();
-                if (result != null && itemRecipe.getRecipe().getResult().isSimilar(result)) {
+                if (itemRecipe.getRecipe().getResult().isSimilar(result)) {
                     int amount = result.getAmount();
                     ItemStack[] crafting = event.getInventory().getMatrix();
                     ItemStack[] cloneCrafting = crafting.clone();
+                    int ingredientAmount, craftingAmount;
+
                     for (int i = 0; i < crafting.length; ++i) {
                         if (crafting[i] == null)
                             continue;
-                        int ingredientAmount = itemRecipe.getIngredient(i).getQuantity();
-                        int craftingAmount = cloneCrafting[i].getAmount();
+                        ingredientAmount = itemRecipe.getIngredient(i).getQuantity();
+                        craftingAmount = cloneCrafting[i].getAmount();
                         cloneCrafting[i].setAmount(craftingAmount - amount * ingredientAmount);
                     }
                     event.getInventory().setMatrix(cloneCrafting);
                     event.getWhoClicked().getInventory().addItem(result);
                 }
+                return;
             }
         }
     }

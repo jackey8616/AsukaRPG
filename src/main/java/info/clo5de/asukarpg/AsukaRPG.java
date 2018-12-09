@@ -21,6 +21,10 @@ public class AsukaRPG extends JavaPlugin {
 
     private ItemListener itemListener = new ItemListener(this);
 
+    public AsukaRPG () {
+        super();
+    }
+
     public AsukaRPG(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
         super(loader, description, dataFolder, file);
     }
@@ -29,11 +33,11 @@ public class AsukaRPG extends JavaPlugin {
     public void onEnable () {
         this.INSTANCE = this;
         this.setMetrics();
+        this.registerEvents();
 
         this.configManager.load();
         this.itemHandler.load();
         this.recipeHandler.loadItemRecipes();
-
     }
 
     @Override
