@@ -60,7 +60,7 @@ public class ItemListener implements Listener {
 
         for (ItemRecipe itemRecipe : this.plugin.getRecipeHandler().getRecipeMap().values()) {
             if (itemRecipe.isMultistackRecipe()) {
-                if (itemRecipe.getRecipe().getResult().isSimilar(result)) {
+                if (result.isSimilar(itemRecipe.getRecipe().getResult())) {
                     int amount = result.getAmount();
                     ItemStack[] crafting = event.getInventory().getMatrix();
                     ItemStack[] cloneCrafting = crafting.clone();
