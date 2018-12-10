@@ -1,14 +1,15 @@
-package info.clo5de.asukarpg.event.TestItemListener;
+package info.clo5de.asukarpg.event.TestWorkbenchCraftListener;
 
 import info.clo5de.asukarpg.AsukaRPG;
 import info.clo5de.asukarpg.TestAsukaRPGBuilder;
-import info.clo5de.asukarpg.event.ItemListener;
+import info.clo5de.asukarpg.event.WorkbenchCraftingListener;
 import info.clo5de.asukarpg.item.Ingredient;
 import info.clo5de.asukarpg.item.ItemID;
 import info.clo5de.asukarpg.item.ItemRecipe;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemFactory;
-import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -33,12 +34,12 @@ import static org.powermock.api.mockito.PowerMockito.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ CraftItemFactory.class, PluginDescriptionFile.class, JavaPluginLoader.class })
-public class TestOnPrepareCraft {
+public class TestRightClickWorkbench {
 
     private static TestAsukaRPGBuilder builder = new TestAsukaRPGBuilder();
     private static AsukaRPG asukaRPG;
-    private static PrepareItemCraftEvent pice;
-    private static ItemListener il;
+    private static InventoryClickEvent ice;
+    private static WorkbenchCraftingListener il;
     private static Map<String, ItemRecipe> map;
     private static info.clo5de.asukarpg.recipe.Handler handler;
 
@@ -54,6 +55,7 @@ public class TestOnPrepareCraft {
     private static ItemStack recipeResultWithoutMulti;
 
     private static int section = 1;
+    private static Player player;
     private static ItemStack assertResult;
     private static ItemStack craftResult;
     private static ItemStack[] craftMatrix;
@@ -61,17 +63,18 @@ public class TestOnPrepareCraft {
 
     @BeforeClass
     public static void classSetup () throws Exception {
-        System.out.println("<<<<< ItemListener#onPrepareCraft init test >>>>>");
+        System.out.println("<<<<< WorkbenchCraftingListener#onRightClickWorkbench init test >>>>>");
         asukaRPG = builder.getInstance();
         handler = asukaRPG.getRecipeHandler();
-        il = new ItemListener(asukaRPG);
-        pice = mock(PrepareItemCraftEvent.class);
-        new TestOnPrepareCraft().resetAll();
+        il = new WorkbenchCraftingListener(asukaRPG);
+        ice = mock(InventoryClickEvent.class);
+        player = mock(Player.class);
+        new TestRightClickWorkbench().resetAll();
     }
 
     @AfterClass
     public static void classTeardown () {
-        System.out.println(">>>>> ItemListener#onPrepareCraft test done <<<<<");
+        System.out.println(">>>>> WorkbenchCraftingListener#onRightClickWorkbench test done <<<<<");
     }
 
     @Before
@@ -101,14 +104,15 @@ public class TestOnPrepareCraft {
         when(handler.getRecipeMap()).thenReturn(map);
         // Player crafting inventory
         craftInv = mock(CraftingInventory.class);
-        when(pice.getInventory()).thenReturn(craftInv);
+        when(ice.getClickedInventory()).thenReturn(craftInv);
+        when(ice.getWhoClicked()).thenReturn(player);
     }
 
     @Test
     public void nothingFollowSystemRecipe () {
         // Not thing follow system recipe.
         when(craftInv.getResult()).thenReturn(null);
-        il.onPrepareCraft(pice);
+        il.onRightClickWorkbench(ice);
         verify(craftInv, Mockito.only()).getResult();
     }
 
@@ -119,7 +123,7 @@ public class TestOnPrepareCraft {
         when(craftInv.getResult()).thenReturn(craftResult);
         // Nothing in Asuka recipes
         when(handler.getRecipeMap()).thenReturn(new HashMap<>());
-        il.onPrepareCraft(pice);
+        il.onRightClickWorkbench(ice);
         verify(craftInv, Mockito.atMost(2)).getResult();
     }
 
@@ -130,7 +134,7 @@ public class TestOnPrepareCraft {
         // Follow system recipe and also Asuka recipe.
         when(craftResult.isSimilar(Mockito.any(ItemStack.class))).thenReturn(false);
         when(craftInv.getResult()).thenReturn(craftResult);
-        il.onPrepareCraft(pice);
+        il.onRightClickWorkbench(ice);
     }
 
     @Test
@@ -159,7 +163,7 @@ public class TestOnPrepareCraft {
                 null, null, null
         };
         when(craftInv.getMatrix()).thenReturn(craftMatrix);
-        il.onPrepareCraft(pice);
+        il.onRightClickWorkbench(ice);
         // Section one will not pass a setResult, so I have to manually set section index and print.
         System.out.println("Pass section " + section);
         section++;
@@ -171,7 +175,7 @@ public class TestOnPrepareCraft {
                 null, null, null
         };
         when(craftInv.getMatrix()).thenReturn(craftMatrix);
-        il.onPrepareCraft(pice);
+        il.onRightClickWorkbench(ice);
         // Section 3: Should return AIR. (Second ingredient is bigger than crafting)
         assertResult = spy(new ItemStack(Material.AIR));
         craftMatrix = new ItemStack[] {
@@ -180,7 +184,7 @@ public class TestOnPrepareCraft {
                 null, null, null
         };
         when(craftInv.getMatrix()).thenReturn(craftMatrix);
-        il.onPrepareCraft(pice);
+        il.onRightClickWorkbench(ice);
         // Section 4: Should return AIR. (Second ingredient is bigger than crafting)
         assertResult = spy(new ItemStack(Material.AIR));
         craftMatrix = new ItemStack[] {
@@ -189,7 +193,7 @@ public class TestOnPrepareCraft {
                 null, null, null
         };
         when(craftInv.getMatrix()).thenReturn(craftMatrix);
-        il.onPrepareCraft(pice);
+        il.onRightClickWorkbench(ice);
         // Section 5: Should return same as fake result, all crafting is fit to produce one result.
         assertResult = recipeResult;
         craftMatrix = new ItemStack[] {
@@ -198,7 +202,7 @@ public class TestOnPrepareCraft {
                 null, null, null
         };
         when(craftInv.getMatrix()).thenReturn(craftMatrix);
-        il.onPrepareCraft(pice);
+        il.onRightClickWorkbench(ice);
         // Section 6: Should return same as fake result, all crafting is fit to produce two result.
         assertResult = recipeResult;
         assertResult.setAmount(2);
@@ -208,7 +212,7 @@ public class TestOnPrepareCraft {
                 null, null, null
         };
         when(craftInv.getMatrix()).thenReturn(craftMatrix);
-        il.onPrepareCraft(pice);
+        il.onRightClickWorkbench(ice);
     }
 
 }

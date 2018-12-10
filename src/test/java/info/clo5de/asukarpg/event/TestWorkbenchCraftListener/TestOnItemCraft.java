@@ -1,8 +1,8 @@
-package info.clo5de.asukarpg.event.TestItemListener;
+package info.clo5de.asukarpg.event.TestWorkbenchCraftListener;
 
 import info.clo5de.asukarpg.AsukaRPG;
 import info.clo5de.asukarpg.TestAsukaRPGBuilder;
-import info.clo5de.asukarpg.event.ItemListener;
+import info.clo5de.asukarpg.event.WorkbenchCraftingListener;
 import info.clo5de.asukarpg.item.Ingredient;
 import info.clo5de.asukarpg.item.ItemID;
 import info.clo5de.asukarpg.item.ItemRecipe;
@@ -40,7 +40,7 @@ public class TestOnItemCraft {
     private static TestAsukaRPGBuilder builder = new TestAsukaRPGBuilder();
     private static AsukaRPG asukaRPG;
     private static CraftItemEvent cie;
-    private static ItemListener il;
+    private static WorkbenchCraftingListener il;
     private static Map<String, ItemRecipe> map;
     private static info.clo5de.asukarpg.recipe.Handler handler;
 
@@ -65,17 +65,17 @@ public class TestOnItemCraft {
 
     @BeforeClass
     public static void classSetup () throws Exception {
-        System.out.println("<<<<< ItemListener#onPrepareCraft init test >>>>>");
+        System.out.println("<<<<< WorkbenchCraftingListener#onPrepareCraft init test >>>>>");
         asukaRPG = builder.getInstance();
         handler = asukaRPG.getRecipeHandler();
-        il = new ItemListener(asukaRPG);
+        il = new WorkbenchCraftingListener(asukaRPG);
         cie = mock(CraftItemEvent.class);
         new TestOnItemCraft().resetAll();
     }
 
     @AfterClass
     public static void classTeardown () {
-        System.out.println(">>>>> ItemListener#onItemCraft test done <<<<<");
+        System.out.println(">>>>> WorkbenchCraftingListener#onItemCraft test done <<<<<");
     }
 
     @Before

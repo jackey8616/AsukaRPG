@@ -1,15 +1,17 @@
 package info.clo5de.asukarpg;
 
-import info.clo5de.asukarpg.event.ItemListener;
+import info.clo5de.asukarpg.event.WorkbenchCraftingListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemFactory;
 import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPluginLoader;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
 import org.powermock.api.mockito.PowerMockito;
@@ -37,7 +39,7 @@ public class TestAsukaRPGBuilder {
     private ConfigManager configManager = mock(ConfigManager.class);
     private info.clo5de.asukarpg.item.Handler itemHandler = mock(info.clo5de.asukarpg.item.Handler.class);
     private info.clo5de.asukarpg.recipe.Handler recipeHandler = mock(info.clo5de.asukarpg.recipe.Handler.class);
-    private ItemListener itemListener = mock(ItemListener.class);
+    private WorkbenchCraftingListener workbenchCraftingListener = mock(WorkbenchCraftingListener.class);
 
     public void setup () throws Exception {
         if (inited)
@@ -67,6 +69,32 @@ public class TestAsukaRPGBuilder {
         // Set others for server.
         when(mockServer.getPluginManager()).thenReturn(mockPluginManager);
         when(mockServer.getItemFactory()).thenReturn(mockItemFactory);
+        // add mock scheduler
+        BukkitScheduler mockScheduler = mock(BukkitScheduler.class);
+        when(mockScheduler.scheduleSyncDelayedTask(
+                Mockito.any(Plugin.class), Mockito.any(Runnable.class), Mockito.anyLong())).
+                thenAnswer((invocation) -> {
+                    Runnable arg;
+                    try {
+                        arg = (Runnable) invocation.getArguments()[1];
+                    } catch (Exception e) {
+                        return null;
+                    }
+                    arg.run();
+                    return null;
+                });
+        when(mockScheduler.scheduleSyncDelayedTask(Mockito.any(Plugin.class), Mockito.any(Runnable.class))).
+                thenAnswer((invocation) -> {
+                    Runnable arg;
+                    try {
+                        arg = (Runnable) invocation.getArguments()[1];
+                    } catch (Exception e) {
+                        return null;
+                    }
+                    arg.run();
+                    return null;
+                });
+        when(mockServer.getScheduler()).thenReturn(mockScheduler);
 
         asukaRPG.onEnable();
         inited = true;
@@ -96,8 +124,8 @@ public class TestAsukaRPGBuilder {
         setFields(asukaRPG, AsukaRPG.class, "itemHandler", itemHandler);
         recipeHandler = spy(new info.clo5de.asukarpg.recipe.Handler(asukaRPG));
         setFields(asukaRPG, AsukaRPG.class, "recipeHandler", recipeHandler);
-        itemListener = spy(new ItemListener(asukaRPG));
-        setFields(asukaRPG, AsukaRPG.class, "itemListener", itemListener);
+        workbenchCraftingListener = spy(new WorkbenchCraftingListener(asukaRPG));
+        setFields(asukaRPG, AsukaRPG.class, "workbenchCraftingListener", workbenchCraftingListener);
 
     }
 

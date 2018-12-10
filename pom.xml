@@ -137,6 +137,7 @@
                     <instrumentation>
                         <excludes>
                             <exclude>info/clo5de/asukarpg/utils/Metrics*.class</exclude>
+                            <exclude>info/clo5de/asukarpg/feature/**/*.class</exclude>
                         </excludes>
                     </instrumentation>
                 </configuration>
