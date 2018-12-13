@@ -94,8 +94,8 @@ public class MeowItem {
 
         itemStack.setAmount(this.quantity);
         itemStack.setItemMeta(itemMeta);
+
         this.itemStack = itemStack;
-        writeToItemStackNBT();
         return this.itemStack;
     }
 
@@ -104,7 +104,9 @@ public class MeowItem {
         return this.itemStack.getItemMeta();
     }
 
-    public String getItemKey () { return this.itemKey; }
+    public String getItemKey () {
+        return this.itemKey;
+    }
 
     public String getDisplayName () {
         return this.displayName;
@@ -135,7 +137,7 @@ public class MeowItem {
     }
 
     public ItemStack getItemStack () {
-        return this.itemStack.clone();
+        return this.itemStack;
     }
 
     public void setItemStack (ItemStack newStack) {

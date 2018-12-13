@@ -59,10 +59,9 @@ public class Handler {
                 this.items.putAll(loadFromYaml(file));
             for (Map.Entry<String, MeowItem> entry : this.items.entrySet()) {
                 entry.getValue().buildItemStack();
-                if (entry.getValue().getItemRecipe() != null) {
+                if (entry.getValue().getItemRecipe() != null)
                     entry.getValue().buildItemRecipe();
-                    System.out.println(entry.getKey() + " built recipe");
-                }
+                entry.getValue().writeToItemStackNBT();
             }
         }
     }

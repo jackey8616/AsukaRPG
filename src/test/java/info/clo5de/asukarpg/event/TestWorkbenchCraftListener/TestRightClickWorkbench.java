@@ -112,7 +112,7 @@ public class TestRightClickWorkbench {
     public void notCraftingInventory () {
         when(ice.getClickedInventory()).thenReturn(null);
         il.onRightClickWorkbench(ice);
-        verify(ice, Mockito.only()).getWhoClicked();
+        verify(ice, Mockito.only()).getClickedInventory();
     }
 
     @Test

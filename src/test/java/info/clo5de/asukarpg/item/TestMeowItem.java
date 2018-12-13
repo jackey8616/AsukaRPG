@@ -8,7 +8,6 @@ import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemFactory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPluginLoader;
 import org.junit.BeforeClass;
@@ -36,12 +35,8 @@ public class TestMeowItem {
     private static ItemLore mockLore = mock(ItemLore.class);
     private static ItemEnchant mockEnchant = mock(ItemEnchant.class);
     private static ItemRecipe mockRecipe = mock(ItemRecipe.class);
-    private static ItemMeta mockMeta = mock(ItemMeta.class);
-    private static org.bukkit.inventory.ItemStack mockStack = mock(org.bukkit.inventory.ItemStack.class);
 
     private static MeowItem asukaItem;
-    private static net.minecraft.server.v1_12_R1.ItemStack mockNMS;
-    private static net.minecraft.server.v1_12_R1.NBTTagCompound spyNBT;
 
     @BeforeClass
     public static void setupBeforeClass () throws Exception {
@@ -120,25 +115,11 @@ public class TestMeowItem {
     public void testGetItemRecipe () {
         assertThat(asukaItem.getItemRecipe().equals(mockRecipe)).isNotNull();
     }
-/*
+
     @Test
     public void testGetItemStack () {
         ItemStack getStack = asukaItem.getItemStack();
-//        assertThat(getStack.getType()).isEqualTo(asukaItem.getMaterial());
-    }
-
-    @Test
-    public void testClone () {
-        MeowItem clone = asukaItem.clone();
-        assertThat(clone.getItemKey().equals(asukaItem.getItemKey())).isTrue();
-        assertThat(clone.getDisplayName().equals(asukaItem.getDisplayName())).isTrue();
-        assertThat(clone.getItemID()).isEqualTo(asukaItem.getItemID());
-        assertThat(clone.getMaterial()).isEqualTo(asukaItem.getMaterial());
-        assertThat(clone.getItemColor().equals(asukaItem.getItemColor())).isTrue();
-        assertThat(clone.getItemLore().equals(asukaItem.getItemLore())).isTrue();
-        assertThat(clone.getItemEnchant().equals(asukaItem.getItemEnchant())).isTrue();
-        assertThat(clone.getItemRecipe().equals(asukaItem.getItemRecipe())).isTrue();
-//        assertThat(clone.getItemStack().isSimilar(asukaItem.getItemStack())).isTrue();
+        assertThat(getStack.getType().equals(mockID.getMaterial())).isTrue();
     }
 
     @Test
@@ -149,5 +130,20 @@ public class TestMeowItem {
         asukaItem.setItemStack(setStack);
         assertThat(asukaItem.getItemStack().isSimilar(setStack));
     }
-*/
+
+    @Test
+    public void testClone () {
+        asukaItem.buildItemStack();
+        MeowItem clone = asukaItem.clone();
+        assertThat(clone.getItemKey().equals(asukaItem.getItemKey())).isTrue();
+        assertThat(clone.getDisplayName().equals(asukaItem.getDisplayName())).isTrue();
+        assertThat(clone.getItemID()).isEqualTo(asukaItem.getItemID());
+        assertThat(clone.getMaterial()).isEqualTo(asukaItem.getMaterial());
+        assertThat(clone.getItemColor().equals(asukaItem.getItemColor())).isTrue();
+        assertThat(clone.getItemLore().equals(asukaItem.getItemLore())).isTrue();
+        assertThat(clone.getItemEnchant().equals(asukaItem.getItemEnchant())).isTrue();
+        assertThat(clone.getItemRecipe().equals(asukaItem.getItemRecipe())).isTrue();
+        assertThat(clone.getItemStack().getType().equals(asukaItem.getMaterial())).isTrue();
+    }
+
 }
