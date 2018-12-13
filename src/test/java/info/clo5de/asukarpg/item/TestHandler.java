@@ -2,6 +2,7 @@ package info.clo5de.asukarpg.item;
 
 import com.google.common.io.Resources;
 import info.clo5de.asukarpg.AsukaRPG;
+import org.bukkit.Bukkit;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,12 +12,14 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.powermock.api.mockito.PowerMockito.*;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ AsukaRPG.class, MeowItem.class })
+@PrepareForTest({ MeowItemFactory.class, AsukaRPG.class })
 @PowerMockIgnore({"javax.management.*"})
 public class TestHandler {
 
@@ -25,10 +28,6 @@ public class TestHandler {
     private static MeowItem mockItem = mock(MeowItem.class);
     private static Handler handler;
 
-    public static Handler getHandler() {
-        return handler;
-    }
-
     @BeforeClass
     public static void setupBeforeClass() {
         // File mock
@@ -36,9 +35,11 @@ public class TestHandler {
         // AsukaRPG mock
         when(mockPlugin.getDataFolder()).thenAnswer(answer -> mockFile);
         // MeowItem mock
-        mockStatic(MeowItem.class);
-        when(MeowItem.fromConfig(Mockito.any(), Mockito.any())).thenReturn(mockItem);
-        when(MeowItem.fromKycConfig(Mockito.any(), Mockito.any())).thenReturn(mockItem);
+        mockStatic(MeowItemFactory.class);
+        Map<String, MeowItem> map = new HashMap<>();
+        map.put("ItemAsukaTestKey", mock(MeowItem.class));
+        map.put("ItemKycTestKey", mock(MeowItem.class));
+        when(MeowItemFactory.loadFromYaml(Mockito.any(File.class))).thenReturn(map);
 
         handler = new Handler(mockPlugin);
     }
@@ -53,7 +54,7 @@ public class TestHandler {
         doReturn(false).when(mockFile).exists();
         handler.load();
 
-        Thread.sleep(1000);
+        Thread.sleep(2000);
     }
 
     @Test

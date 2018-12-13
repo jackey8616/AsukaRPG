@@ -2,47 +2,12 @@ package info.clo5de.asukarpg.item;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import org.bukkit.Material;
-import org.bukkit.configuration.MemorySection;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class MeowItem {
-
-    public static MeowItem fromConfig(String itemKey, MemorySection config) {
-        String displayName = config.getString("DisplayName");
-        ItemID itemID = ItemID.fromConfig(config.getString("ItemID"));
-        ItemColor itemColor = ItemColor.fromConfig(config);
-        ItemLore itemLore = ItemLore.fromConfig(config.getStringList("ItemLore"));
-        ItemEnchant itemEnchant = ItemEnchant.fromConfig(config.getList("ItemEnchant"));
-        ItemRecipe itemRecipe = ItemRecipe.fromKycConfig(itemKey, config.getList("ItemRecipe"));
-
-        int quantity = config.getInt("Quantity", 1);
-        boolean canCraft = config.getBoolean("CanCraft", true);
-        boolean unbreakable = config.getBoolean("Unbreakable", false);
-        boolean hideEnchants = config.getBoolean("HideEnchants", false);
-
-        return new MeowItem(itemKey, displayName, itemID, itemColor, itemLore, itemEnchant, itemRecipe, quantity,
-                canCraft, unbreakable, hideEnchants);
-    }
-
-    public static MeowItem fromKycConfig(String displayName, MemorySection config) {
-        String itemKey = config.getString("ItemKey");
-        ItemID itemID = ItemID.fromConfig(config.getString("ItemID"));
-        ItemColor itemColor = ItemColor.fromKycConfig(config);
-        ItemLore itemLore = ItemLore.fromConfig(config.getStringList("ItemLores"));
-        ItemEnchant itemEnchant = ItemEnchant.fromConfig(config.getList("Enchants"));
-        ItemRecipe itemRecipe = ItemRecipe.fromKycConfig(itemKey, config.getList("Materials"));
-
-        int quantity = config.getInt("Quantity", 1);
-        boolean canCraft = config.getBoolean("CanCraft", true);
-        boolean unbreakable = config.getBoolean("Unbreakable", false);
-        boolean hideEnchants = config.getBoolean("HideEnchants", false);
-
-        return new MeowItem(itemKey, displayName, itemID, itemColor, itemLore, itemEnchant, itemRecipe, quantity,
-                canCraft, unbreakable, hideEnchants);
-    }
 
     private String itemKey;
     private String displayName;
