@@ -25,12 +25,12 @@ public class TestHandler {
     private static MeowItem mockItem = mock(MeowItem.class);
     private static Handler handler;
 
-    public static Handler getHandler () {
+    public static Handler getHandler() {
         return handler;
     }
 
     @BeforeClass
-    public static void setupBeforeClass () throws Exception {
+    public static void setupBeforeClass() {
         // File mock
         mockFile = spy(new File(Resources.getResource("test_server_folder/plugins/AsukaRPG").getFile()));
         // AsukaRPG mock
@@ -56,14 +56,14 @@ public class TestHandler {
         Thread.sleep(1000);
     }
 
-//    @Test
-    public void testGetItemMap () {
+    @Test
+    public void testGetItemMap() {
         assertThat(handler.getItemMap().size()).isNotZero();
         assertThat(handler.getItemMap().size()).isEqualTo(2);
     }
 
-//    @Test
-    public void testGetItemByKey () {
+    @Test
+    public void testGetItemByKey() {
         assertThat(handler.getItemByKey("ItemAsukaTestKey")).isNotNull();
         assertThat(handler.getItemByKey("ItemKycTestKey")).isNotNull();
     }

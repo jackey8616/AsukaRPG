@@ -73,6 +73,7 @@ public class TestMeowItem {
 
     @Test
     public void testBuildRecipe () {
+        asukaItem.buildItemStack();
         assertThat(asukaItem.buildItemRecipe()).isNotNull();
     }
 
@@ -118,6 +119,7 @@ public class TestMeowItem {
 
     @Test
     public void testGetItemStack () {
+        asukaItem.buildItemStack();
         ItemStack getStack = asukaItem.getItemStack();
         assertThat(getStack.getType().equals(mockID.getMaterial())).isTrue();
     }
