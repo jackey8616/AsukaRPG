@@ -109,6 +109,13 @@ public class TestRightClickWorkbench {
     }
 
     @Test
+    public void notCraftingInventory () {
+        when(ice.getClickedInventory()).thenReturn(null);
+        il.onRightClickWorkbench(ice);
+        verify(ice, Mockito.only()).getWhoClicked();
+    }
+
+    @Test
     public void nothingFollowSystemRecipe () {
         // Not thing follow system recipe.
         when(craftInv.getResult()).thenReturn(null);

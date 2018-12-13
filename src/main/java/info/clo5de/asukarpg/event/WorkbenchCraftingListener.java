@@ -57,7 +57,6 @@ public class WorkbenchCraftingListener implements Listener {
                 return;
             }
         }
-
     }
 
     /**

@@ -65,7 +65,7 @@ public class TestOnItemCraft {
 
     @BeforeClass
     public static void classSetup () throws Exception {
-        System.out.println("<<<<< WorkbenchCraftingListener#onPrepareCraft init test >>>>>");
+        System.out.println("<<<<< WorkbenchCraftListener#onItemCraft init test >>>>>");
         asukaRPG = builder.getInstance();
         handler = asukaRPG.getRecipeHandler();
         il = new WorkbenchCraftingListener(asukaRPG);

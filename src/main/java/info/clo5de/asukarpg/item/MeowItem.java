@@ -1,14 +1,16 @@
 package info.clo5de.asukarpg.item;
 
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import org.bukkit.Material;
 import org.bukkit.configuration.MemorySection;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class MeowItem {
 
-    public static MeowItem fromConfig (String itemKey, MemorySection config) {
+    public static MeowItem fromConfig(String itemKey, MemorySection config) {
         String displayName = config.getString("DisplayName");
         ItemID itemID = ItemID.fromConfig(config.getString("ItemID"));
         ItemColor itemColor = ItemColor.fromConfig(config);
@@ -25,7 +27,7 @@ public class MeowItem {
                 canCraft, unbreakable, hideEnchants);
     }
 
-    public static MeowItem fromKycConfig (String displayName, MemorySection config) {
+    public static MeowItem fromKycConfig(String displayName, MemorySection config) {
         String itemKey = config.getString("ItemKey");
         ItemID itemID = ItemID.fromConfig(config.getString("ItemID"));
         ItemColor itemColor = ItemColor.fromKycConfig(config);
@@ -93,6 +95,7 @@ public class MeowItem {
         itemStack.setAmount(this.quantity);
         itemStack.setItemMeta(itemMeta);
         this.itemStack = itemStack;
+        writeToItemStackNBT();
         return this.itemStack;
     }
 
@@ -100,6 +103,8 @@ public class MeowItem {
         this.itemRecipe.buildItemRecipe(this.itemStack);
         return this.itemStack.getItemMeta();
     }
+
+    public String getItemKey () { return this.itemKey; }
 
     public String getDisplayName () {
         return this.displayName;
@@ -127,6 +132,31 @@ public class MeowItem {
 
     public ItemRecipe getItemRecipe () {
         return this.itemRecipe;
+    }
+
+    public ItemStack getItemStack () {
+        return this.itemStack.clone();
+    }
+
+    public void setItemStack (ItemStack newStack) {
+        this.itemStack = newStack;
+    }
+
+    public MeowItem clone () {
+        MeowItem meowItem = new MeowItem(this.itemKey, this.displayName, this.itemID, this.itemColor, this.itemLore,
+                this.itemEnchant, this.itemRecipe, this.quantity, this.canCraft, this.unbreakable, this.hideEnchants);
+        meowItem.itemStack = this.itemStack.clone();
+        return meowItem;
+    }
+
+    public void writeToItemStackNBT () {
+        net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(this.itemStack);
+        NBTTagCompound compound = nmsStack.hasTag() ? nmsStack.getTag() : new NBTTagCompound();
+
+        compound.setString("ItemKey", this.itemKey);
+
+        nmsStack.setTag(compound);
+        this.itemStack = CraftItemStack.asBukkitCopy(nmsStack);
     }
 
 }

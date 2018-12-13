@@ -72,8 +72,7 @@ public class TestAsukaRPGBuilder {
         // add mock scheduler
         BukkitScheduler mockScheduler = mock(BukkitScheduler.class);
         when(mockScheduler.scheduleSyncDelayedTask(
-                Mockito.any(Plugin.class), Mockito.any(Runnable.class), Mockito.anyLong())).
-                thenAnswer((invocation) -> {
+                Mockito.any(Plugin.class), Mockito.any(Runnable.class), Mockito.anyLong())).thenAnswer((invocation) -> {
                     Runnable arg;
                     try {
                         arg = (Runnable) invocation.getArguments()[1];

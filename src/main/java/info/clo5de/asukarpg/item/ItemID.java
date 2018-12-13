@@ -66,7 +66,7 @@ public class ItemID {
         if (hasSubId())
             return new ItemStack (this.material, 1, this.subId);
         else
-            return new ItemStack(this.material);
+            return new ItemStack (this.material, 1);
     }
 
     public boolean equals (ItemID itemID) {
