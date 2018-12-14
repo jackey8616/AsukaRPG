@@ -10,3 +10,6 @@ CustomCrafterEx:
     - LoreC
     Enchants:
     - PROTECTION_ENVIRONMENTAL:1
+    SpecialEffects:
+    - ADD_CRIT 1
+    - RESTORED_HP_HIT 10 10

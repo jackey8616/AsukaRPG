@@ -10,3 +10,6 @@ AsukaRPG:
     - LoreC
     ItemEnchant:
     - PROTECTION_ENVIRONMENTAL:1
+    ItemExEnchant:
+    - ADD_CRIT 1
+    - RESTORED_HP_HIT 10 10

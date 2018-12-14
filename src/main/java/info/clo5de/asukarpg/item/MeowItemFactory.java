@@ -15,6 +15,7 @@ public class MeowItemFactory {
         ItemColor itemColor = ItemColor.fromConfig(config);
         ItemLore itemLore = ItemLore.fromConfig(config.getStringList("ItemLore"));
         ItemEnchant itemEnchant = ItemEnchant.fromConfig(config.getList("ItemEnchant"));
+        ItemExEnchant itemExEnchant = ItemExEnchant.fromConfig(config.getList("ItemExEnchant"));
         ItemRecipe itemRecipe = ItemRecipe.fromKycConfig(itemKey, config.getList("ItemRecipe"));
 
         int quantity = config.getInt("Quantity", 1);
@@ -22,8 +23,8 @@ public class MeowItemFactory {
         boolean unbreakable = config.getBoolean("Unbreakable", false);
         boolean hideEnchants = config.getBoolean("HideEnchants", false);
 
-        return new MeowItem(itemKey, displayName, itemID, itemColor, itemLore, itemEnchant, itemRecipe, quantity,
-                canCraft, unbreakable, hideEnchants);
+        return new MeowItem(itemKey, displayName, ItemType.ASUKA, itemID, itemColor, itemLore, itemEnchant,
+                itemExEnchant, itemRecipe, quantity, canCraft, unbreakable, hideEnchants);
     }
 
     public static MeowItem fromKycConfig(String displayName, MemorySection config) {
@@ -32,6 +33,7 @@ public class MeowItemFactory {
         ItemColor itemColor = ItemColor.fromKycConfig(config);
         ItemLore itemLore = ItemLore.fromConfig(config.getStringList("ItemLores"));
         ItemEnchant itemEnchant = ItemEnchant.fromConfig(config.getList("Enchants"));
+        ItemExEnchant itemExEnchant = ItemExEnchant.fromConfig(config.getList("SpecialEffects"));
         ItemRecipe itemRecipe = ItemRecipe.fromKycConfig(itemKey, config.getList("Materials"));
 
         int quantity = config.getInt("Quantity", 1);
@@ -39,8 +41,8 @@ public class MeowItemFactory {
         boolean unbreakable = config.getBoolean("Unbreakable", false);
         boolean hideEnchants = config.getBoolean("HideEnchants", false);
 
-        return new MeowItem(itemKey, displayName, itemID, itemColor, itemLore, itemEnchant, itemRecipe, quantity,
-                canCraft, unbreakable, hideEnchants);
+        return new MeowItem(itemKey, displayName, ItemType.KYCRAFT, itemID, itemColor, itemLore, itemEnchant,
+                itemExEnchant, itemRecipe, quantity, canCraft, unbreakable, hideEnchants);
     }
 
     public static Map<String, MeowItem> loadFromYaml (File file) {

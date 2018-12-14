@@ -26,9 +26,11 @@ public class TestMeowItem {
     private static AsukaRPG asukaRPG;
 
     private static ItemID mockID;
+    private static ItemType itemType = ItemType.ASUKA;
     private static ItemColor mockColor = mock(ItemColor.class);
     private static ItemLore mockLore = mock(ItemLore.class);
     private static ItemEnchant mockEnchant = mock(ItemEnchant.class);
+    private static ItemExEnchant mockExEnchat = mock(ItemExEnchant.class);
     private static ItemRecipe mockRecipe = mock(ItemRecipe.class);
 
     private static MeowItem asukaItem;
@@ -38,8 +40,9 @@ public class TestMeowItem {
         asukaRPG = builder.getInstance();
         mockID = spy(new ItemID(Material.STONE, (byte) 0));
 
-        asukaItem = new MeowItem("ItemAsukaTestKey", "ItemAsukaTestName", mockID, mockColor,
-                mockLore, mockEnchant, mockRecipe, 1, true, false, false);
+        asukaItem = new MeowItem("ItemAsukaTestKey", "ItemAsukaTestName", itemType, mockID,
+                mockColor, mockLore, mockEnchant, mockExEnchat,  mockRecipe, 1, true,
+                false, false);
     }
 
     @Test
@@ -65,6 +68,11 @@ public class TestMeowItem {
     }
 
     @Test
+    public void testGetItemType () {
+        assertThat(asukaItem.getItemType().equals(ItemType.ASUKA)).isTrue();
+    }
+
+    @Test
     public void testGetItemID () {
         assertThat(asukaItem.getItemID()).isEqualTo(mockID);
     }
@@ -87,6 +95,11 @@ public class TestMeowItem {
     @Test
     public void testGetItemEnchant () {
         assertThat(asukaItem.getItemEnchant().equals(mockEnchant)).isNotNull();
+    }
+
+    @Test
+    public void testGetItemExEnchant () {
+        assertThat(asukaItem.getItemExEnchant().equals(mockExEnchat)).isNotNull();
     }
 
     @Test

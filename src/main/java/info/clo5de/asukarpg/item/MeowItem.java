@@ -11,10 +11,13 @@ public class MeowItem {
 
     private String itemKey;
     private String displayName;
+
+    private ItemType itemType;
     private ItemID itemID;
     private ItemColor itemColor;
     private ItemLore itemLore;
     private ItemEnchant itemEnchant;
+    private ItemExEnchant itemExEnchant;
     private ItemRecipe itemRecipe;
 
     private int quantity;
@@ -23,15 +26,18 @@ public class MeowItem {
     private boolean hideEnchants;
     private ItemStack itemStack;
 
-    public MeowItem (String itemKey, String displayName, ItemID itemID, ItemColor itemColor, ItemLore itemLore,
-                     ItemEnchant itemEnchant, ItemRecipe itemRecipe, int quantity, boolean canCraft,
-                     boolean unbreakable, boolean hideEnchants) {
+    public MeowItem (String itemKey, String displayName, ItemType itemType, ItemID itemID, ItemColor itemColor,
+                     ItemLore itemLore, ItemEnchant itemEnchant, ItemExEnchant itemExEnchant, ItemRecipe itemRecipe,
+                     int quantity, boolean canCraft, boolean unbreakable, boolean hideEnchants) {
         this.itemKey = itemKey;
         this.displayName = displayName;
+
+        this.itemType = itemType;
         this.itemID = itemID;
         this.itemColor = itemColor;
         this.itemLore = itemLore;
         this.itemEnchant = itemEnchant;
+        this.itemExEnchant = itemExEnchant;
         this.itemRecipe = itemRecipe;
 
         this.quantity = quantity;
@@ -77,6 +83,10 @@ public class MeowItem {
         return this.displayName;
     }
 
+    public ItemType getItemType () {
+        return this.itemType;
+    }
+
     public ItemID getItemID () {
         return this.itemID;
     }
@@ -97,6 +107,10 @@ public class MeowItem {
         return this.itemEnchant;
     }
 
+    public ItemExEnchant getItemExEnchant () {
+        return this.itemExEnchant;
+    }
+
     public ItemRecipe getItemRecipe () {
         return this.itemRecipe;
     }
@@ -110,8 +124,9 @@ public class MeowItem {
     }
 
     public MeowItem clone () {
-        MeowItem meowItem = new MeowItem(this.itemKey, this.displayName, this.itemID, this.itemColor, this.itemLore,
-                this.itemEnchant, this.itemRecipe, this.quantity, this.canCraft, this.unbreakable, this.hideEnchants);
+        MeowItem meowItem = new MeowItem(this.itemKey, this.displayName, this.itemType, this.itemID, this.itemColor,
+                this.itemLore, this.itemEnchant, this.itemExEnchant, this.itemRecipe, this.quantity, this.canCraft,
+                this.unbreakable, this.hideEnchants);
         meowItem.itemStack = this.itemStack.clone();
         return meowItem;
     }
