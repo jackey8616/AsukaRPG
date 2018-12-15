@@ -15,7 +15,7 @@ public class MeowItemFactory {
         ItemColor itemColor = ItemColor.fromConfig(config);
         ItemLore itemLore = ItemLore.fromConfig(config.getStringList("ItemLore"));
         ItemEnchant itemEnchant = ItemEnchant.fromConfig(config.getList("ItemEnchant"));
-        ItemExEnchant itemExEnchant = ItemExEnchant.fromConfig(config.getList("ItemExEnchant"));
+        ItemExEnchant itemExEnchant = ItemExEnchant.fromConfig(ItemType.ASUKA, config.getList("ItemExEnchant"));
         ItemRecipe itemRecipe = ItemRecipe.fromKycConfig(itemKey, config.getList("ItemRecipe"));
 
         int quantity = config.getInt("Quantity", 1);
@@ -33,7 +33,7 @@ public class MeowItemFactory {
         ItemColor itemColor = ItemColor.fromKycConfig(config);
         ItemLore itemLore = ItemLore.fromConfig(config.getStringList("ItemLores"));
         ItemEnchant itemEnchant = ItemEnchant.fromConfig(config.getList("Enchants"));
-        ItemExEnchant itemExEnchant = ItemExEnchant.fromConfig(config.getList("SpecialEffects"));
+        ItemExEnchant itemExEnchant = ItemExEnchant.fromConfig(ItemType.KYCRAFT, config.getList("SpecialEffects"));
         ItemRecipe itemRecipe = ItemRecipe.fromKycConfig(itemKey, config.getList("Materials"));
 
         int quantity = config.getInt("Quantity", 1);

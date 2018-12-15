@@ -1,5 +1,7 @@
 package info.clo5de.asukarpg;
 
+import info.clo5de.asukarpg.event.ExEnchantListener;
+import info.clo5de.asukarpg.event.PlayerListener;
 import info.clo5de.asukarpg.event.WorkbenchCraftingListener;
 import info.clo5de.asukarpg.utils.Metrics;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -16,13 +18,13 @@ public class AsukaRPG extends JavaPlugin {
     public static AsukaRPG INSTANCE;
 
     private ConfigManager configManager = new ConfigManager(this);
-    //private info.clo5de.asukarpg.feature.event.player.Handler playerHandler = new info.clo5de.asukarpg.feature.event.player.Handler(this);
+    private info.clo5de.asukarpg.player.Handler playerHandler = new info.clo5de.asukarpg.player.Handler(this);
     private info.clo5de.asukarpg.item.Handler itemHandler = new info.clo5de.asukarpg.item.Handler(this);
     private info.clo5de.asukarpg.recipe.Handler recipeHandler = new info.clo5de.asukarpg.recipe.Handler(this);
 
-    //private PlayerListener playerListener = new PlayerListener(this, playerHandler);
+    private PlayerListener playerListener = new PlayerListener(this);
     private WorkbenchCraftingListener workbenchCraftingListener = new WorkbenchCraftingListener(this);
-    //private WorkbenchCraftListener workbenchCraftListener = new WorkbenchCraftListener(this, playerHandler);
+    private ExEnchantListener exEnchantListener = new ExEnchantListener(this);
 
     public AsukaRPG () {
         super();
@@ -52,13 +54,18 @@ public class AsukaRPG extends JavaPlugin {
 
     private void registerEvents() {
         PluginManager pm = getServer().getPluginManager();
-        //pm.registerEvents(this.playerListener, this);
+
+        pm.registerEvents(this.playerListener, this);
         pm.registerEvents(this.workbenchCraftingListener, this);
-        //pm.registerEvents(this.workbenchCraftListener, this);
+        pm.registerEvents(this.exEnchantListener, this);
     }
 
     public ConfigManager getConfigManager () {
         return this.configManager;
+    }
+
+    public info.clo5de.asukarpg.player.Handler getPlayerHandler () {
+        return this.playerHandler;
     }
 
     public info.clo5de.asukarpg.item.Handler getItemHandler () {

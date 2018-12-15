@@ -20,6 +20,11 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+        <!--Jitpack github repo downloader-->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -40,6 +45,12 @@
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
             <version>1.12.2-R0.1-SNAPSHOT</version>
+        </dependency>
+        <!--API from Arnuh of ArmorEquipEvent-->
+        <dependency>
+            <groupId>com.github.Arnuh</groupId>
+            <artifactId>ArmorEquipEvent</artifactId>
+            <version>1.7.1</version>
         </dependency>
         <!--JUnit-->
         <dependency>
