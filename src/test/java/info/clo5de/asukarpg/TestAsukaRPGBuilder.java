@@ -119,7 +119,7 @@ public class TestAsukaRPGBuilder {
         // RPG instance
         configManager = spy(new ConfigManager(asukaRPG));
         setFields(asukaRPG, AsukaRPG.class, "configManager", configManager);
-        itemHandler = spy(new info.clo5de.asukarpg.item.Handler(asukaRPG));
+        //itemHandler = spy(new info.clo5de.asukarpg.item.Handler(asukaRPG));
         setFields(asukaRPG, AsukaRPG.class, "itemHandler", itemHandler);
         recipeHandler = spy(new info.clo5de.asukarpg.recipe.Handler(asukaRPG));
         setFields(asukaRPG, AsukaRPG.class, "recipeHandler", recipeHandler);

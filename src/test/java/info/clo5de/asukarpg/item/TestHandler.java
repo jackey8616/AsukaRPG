@@ -2,9 +2,11 @@ package info.clo5de.asukarpg.item;
 
 import com.google.common.io.Resources;
 import info.clo5de.asukarpg.AsukaRPG;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -16,74 +18,69 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.*;
 
-@Ignore
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({  })
+@PrepareForTest({ Handler.class, AsukaRPG.class, MeowItemFactory.class })
 @PowerMockIgnore({"javax.management.*"})
 public class TestHandler {
 
-    //private static TestAsukaRPGBuilder builder = new TestAsukaRPGBuilder();
     private static AsukaRPG asukaRPG;
 
-    private static File mockFile;
-    private static AsukaRPG mockPlugin = mock(AsukaRPG.class);
-    private static MeowItem mockItem = mock(MeowItem.class);
+    private static File resourceFile, mockFile;
+    private static MeowItem asukaItem, kycItem;
     private static Handler handler;
 
     @BeforeClass
-    public static void setupBeforeClass() throws Exception {
-        //asukaRPG = builder.getInstance();
-        mockFile = spy(new File(Resources.getResource("test_server_folder/plugins/AsukaRPG").getFile()));
+    public static void setup() throws Exception {
         asukaRPG = mock(AsukaRPG.class);
 
-//        when(asukaRPG.getDataFolder()).thenAnswer(answer -> mockFile);
+        mockFile = mock(File.class);
+        resourceFile = new File(
+                Resources.getResource("test_server_folder/plugins/AsukaRPG/item").getFile());
+
+        when(mockFile.listFiles()).thenReturn(resourceFile.listFiles());
+        whenNew(File.class).withParameterTypes(File.class, String.class).withArguments(
+                Mockito.eq(asukaRPG.getDataFolder()), Mockito.eq("item")).thenReturn(mockFile);
+
+        Map<String, MeowItem> map = spy(new HashMap<>());
+        asukaItem = mock(MeowItem.class);
+        kycItem = mock(MeowItem.class);
+        when(asukaItem.buildItemStack()).thenReturn(spy( new ItemStack(Material.STONE)));
+        when(kycItem.buildItemStack()).thenReturn(spy(new ItemStack(Material.STONE)));
+        map.put("ItemAsukaTestKey", asukaItem);
+        map.put("ItemKycTestKey", kycItem);
 
         mockStatic(MeowItemFactory.class);
-        Map<String, MeowItem> map = new HashMap<>();
-        map.put("ItemAsukaTestKey", mock(MeowItem.class));
-        map.put("ItemKycTestKey", mock(MeowItem.class));
         when(MeowItemFactory.loadFromYaml(Mockito.any(File.class))).thenReturn(map);
 
         handler = new Handler(asukaRPG);
     }
 
-    @AfterClass
-    public static void teardown () {
-        mockFile.delete();
-    }
-
     @Test
-    public void testLoad() throws Exception {
+    public void testLoad() {
         when(mockFile.exists()).thenReturn(false);
-
         handler.load();
-        //verify(mockFile, Mockito.never()).listFiles();
         verify(mockFile, Mockito.times(1)).mkdirs();
-/*        when(mockItem.getItemRecipe()).thenReturn(mock(ItemRecipe.class));
-        handler.load();
-        when(mockItem.getItemRecipe()).thenReturn(null);
-        handler.load();
 
-        doReturn(false).when(mockFile).exists();
+        when(mockFile.exists()).thenReturn(true);
         handler.load();
+        verify(asukaItem, Mockito.times(1)).writeToItemStackNBT();
+        verify(kycItem, Mockito.times(1)).writeToItemStackNBT();
 
-        Thread.sleep(2000);
-        */
     }
 
     @Test
     public void testGetItemMap() {
-//        assertThat(handler.getItemMap().size()).isNotZero();
-//        assertThat(handler.getItemMap().size()).isEqualTo(2);
+        assertThat(handler.getItemMap().size()).isEqualTo(2);
     }
 
     @Test
     public void testGetItemByKey() {
-//        assertThat(handler.getItemByKey("ItemAsukaTestKey")).isNotNull();
-//        assertThat(handler.getItemByKey("ItemKycTestKey")).isNotNull();
+        assertThat(handler.getItemByKey("ItemAsukaTestKey")).isNotNull();
+        assertThat(handler.getItemByKey("ItemKycTestKey")).isNotNull();
     }
 
 }
