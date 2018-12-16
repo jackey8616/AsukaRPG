@@ -10,6 +10,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.powermock.api.mockito.PowerMockito.*;
@@ -21,8 +22,9 @@ public class TestHandler {
 
     private static AsukaRPG asukaRPG;
     private static Handler playerHandler;
-    private static HashMap<Player, AsukaPlayer> spyMap;
+    private static HashMap<UUID, AsukaPlayer> spyMap;
 
+    private static UUID uuid;
     private static Player player;
     private static AsukaPlayer asukaPlayer;
 
@@ -31,9 +33,11 @@ public class TestHandler {
         asukaRPG = mock(AsukaRPG.class);
 
         spyMap = spy(new HashMap<>());
+        uuid = mock(UUID.class);
         player = mock(Player.class);
+        when(player.getUniqueId()).thenReturn(uuid);
         asukaPlayer = mock(AsukaPlayer.class);
-        spyMap.put(player, asukaPlayer);
+        spyMap.put(player.getUniqueId(), asukaPlayer);
 
         whenNew(HashMap.class).withNoArguments().thenReturn(spyMap);
         playerHandler = new Handler(asukaRPG);

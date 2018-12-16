@@ -33,24 +33,28 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <!--Bukkit API-->
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <!--CraftBukkit API-->
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
             <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <!--API from Arnuh of ArmorEquipEvent-->
         <dependency>
             <groupId>com.github.Arnuh</groupId>
             <artifactId>ArmorEquipEvent</artifactId>
             <version>1.7.1</version>
+            <scope>compile</scope>
         </dependency>
         <!--JUnit-->
         <dependency>
@@ -134,6 +138,27 @@
                 <configuration>
                     <outputDirectory>${output_dir}</outputDirectory>
                 </configuration>
+            </plugin>
+            <!--maven-assembly-plugin-->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <outputDirectory>${output_dir}</outputDirectory>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!--cobertura-maven-plugin-->
             <plugin>

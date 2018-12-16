@@ -5,6 +5,7 @@ import info.clo5de.asukarpg.AsukaRPG;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class PlayerListener implements Listener {
@@ -18,11 +19,19 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerEquipe (ArmorEquipEvent event) {
+    public void onPlayerChangeSlot (PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
-        ItemStack equipe = event.getNewArmorPiece();
+        ItemStack held = player.getInventory().getItem(event.getNewSlot());
 
-        this.playerHandler.updatePlayerEquip(player, equipe);
+        this.playerHandler.updatePlayerEquip(player, held);
+    }
+
+    @EventHandler
+    public void onPlayerEquip (ArmorEquipEvent event) {
+        Player player = event.getPlayer();
+        ItemStack equip = event.getNewArmorPiece();
+
+        this.playerHandler.updatePlayerEquip(player, equip);
     }
 
 }

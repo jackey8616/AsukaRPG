@@ -44,11 +44,11 @@ public class AsukaPlayer {
         Set<Map.Entry<String, ExEnchant>> set = meowItem.getItemExEnchant().toEntrySet();
         for (Map.Entry<String, ExEnchant> each : set) {
             if (!exEnchantMap.containsKey(each.getKey())) {
-                exEnchantMap.put(each.getKey(), each.getValue());
+                exEnchantMap.put(each.getKey(), each.getValue().clone());
             } else {
                 ExEnchant exEnchant = exEnchantMap.get(each.getKey());
-                exEnchant.setAbility(exEnchant.getAbility() * each.getValue().getAbility());
-                exEnchant.setEffect(exEnchant.getEffect() * each.getValue().getEffect());
+                exEnchant.setAbility(exEnchant.getAbility() * (1.0D + each.getValue().getAbility()));
+                exEnchant.setEffect(exEnchant.getEffect() + each.getValue().getEffect());
             }
         }
     }

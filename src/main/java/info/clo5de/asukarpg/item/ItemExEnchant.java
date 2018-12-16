@@ -13,12 +13,9 @@ public class ItemExEnchant {
         Map<String, ExEnchant> map = new HashMap<>();
         for (int i = 0; i < list.size(); ++i) {
             String[] line = ((String) list.get(i)).split(" ");
-            if (itemType.equals(ItemType.ASUKA))
-                map.put(line[0], new ExEnchant(
-                        line[0], Double.parseDouble(line[1]), line.length == 3 ? Double.parseDouble(line[2]) : 0.0D));
-            else if (itemType.equals(ItemType.KYCRAFT))
-                map.put(line[0], new ExEnchant(
-                        line[0], Integer.parseInt(line[1]), line.length == 3 ? Integer.parseInt(line[2]) : 0.0D));
+            double ability = Double.parseDouble(line[1]);
+            double effect = line.length == 3 ? Double.parseDouble(line[2]) : 0.0D;
+            map.put(line[0], new ExEnchant(line[0], ability > 0 ? ability / 100.0D : ability, effect));
         }
         return new ItemExEnchant(map);
     }

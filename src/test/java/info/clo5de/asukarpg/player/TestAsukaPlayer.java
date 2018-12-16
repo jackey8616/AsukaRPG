@@ -1,10 +1,9 @@
 package info.clo5de.asukarpg.player;
 
-import info.clo5de.asukarpg.AsukaRPG;
-import info.clo5de.asukarpg.item.*;
-import info.clo5de.asukarpg.item.Handler;
+import info.clo5de.asukarpg.item.ExEnchant;
+import info.clo5de.asukarpg.item.ItemExEnchant;
+import info.clo5de.asukarpg.item.MeowItem;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.junit.BeforeClass;
@@ -20,9 +19,7 @@ import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.spy;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
+import static org.powermock.api.mockito.PowerMockito.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ AsukaPlayer.class })
@@ -81,7 +78,7 @@ public class TestAsukaPlayer {
 
     @Test
     public void testOnEquip () {
-        ExEnchant ADD_CRITI_A = spy(new ExEnchant("ADD_CRITI", 50.0D, 25.0D));
+        ExEnchant ADD_CRITI_A = spy(new ExEnchant("ADD_CRITI", 0.5D, 25.0D));
         Map<String, ExEnchant> mockMap = spy(new HashMap<>());
         mockMap.put("ADD_CRITI", ADD_CRITI_A);
         ItemExEnchant mockItemExEnchant = mock(ItemExEnchant.class);
@@ -90,11 +87,11 @@ public class TestAsukaPlayer {
         when(mockItem.getItemExEnchant()).thenReturn(mockItemExEnchant);
 
         asukaPlayer.onEquip(mockItem);
-        assertThat(spyMap.get("ADD_CRITI").getAbility()).isEqualTo(50.0D);
+        assertThat(spyMap.get("ADD_CRITI").getAbility()).isEqualTo(0.5D);
         assertThat(spyMap.get("ADD_CRITI").getEffect()).isEqualTo(25.0D);
         asukaPlayer.onEquip(mockItem);
-        assertThat(spyMap.get("ADD_CRITI").getAbility()).isEqualTo(2500.0D);
-        assertThat(spyMap.get("ADD_CRITI").getEffect()).isEqualTo(625.0D);
+        assertThat(spyMap.get("ADD_CRITI").getAbility()).isEqualTo(0.75D);
+        assertThat(spyMap.get("ADD_CRITI").getEffect()).isEqualTo(50.0D);
     }
 
 }

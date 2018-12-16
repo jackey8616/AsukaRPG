@@ -117,6 +117,10 @@ public class TestAsukaRPGBuilder {
         setFields(null, Bukkit.class, "server", mockServer);
         setFields(null, CraftItemFactory.class, "instance", mockItemFactory);
         // RPG instance
+        when(asukaRPG.getConfigManager()).thenReturn(configManager);
+        when(asukaRPG.getItemHandler()).thenReturn(itemHandler);
+        when(asukaRPG.getRecipeHandler()).thenReturn(recipeHandler);
+        /*
         configManager = spy(new ConfigManager(asukaRPG));
         setFields(asukaRPG, AsukaRPG.class, "configManager", configManager);
         //itemHandler = spy(new info.clo5de.asukarpg.item.Handler(asukaRPG));
@@ -125,7 +129,7 @@ public class TestAsukaRPGBuilder {
         setFields(asukaRPG, AsukaRPG.class, "recipeHandler", recipeHandler);
         workbenchCraftingListener = spy(new WorkbenchCraftingListener(asukaRPG));
         setFields(asukaRPG, AsukaRPG.class, "workbenchCraftingListener", workbenchCraftingListener);
-
+        */
     }
 
     public AsukaRPG getInstance () throws Exception {

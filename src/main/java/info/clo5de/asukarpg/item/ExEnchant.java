@@ -8,6 +8,7 @@ public class ExEnchant {
     private double ability, effect;
 
     public ExEnchant (String name, double ability, double effect) {
+        System.out.println("NEW " + name + " " + ability);
         this.name = name;
         this.ability = ability;
         this.effect = effect;
@@ -43,6 +44,10 @@ public class ExEnchant {
 
     public void setEffect (double effect) {
         this.effect = effect;
+    }
+
+    public ExEnchant clone () {
+        return new ExEnchant(this.name, this.ability, this.effect);
     }
 
     public boolean isTriggered () {

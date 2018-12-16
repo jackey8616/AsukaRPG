@@ -32,9 +32,9 @@ public class Handler {
                 this.items.putAll(MeowItemFactory.loadFromYaml(file));
             for (Map.Entry<String, MeowItem> entry : this.items.entrySet()) {
                 entry.getValue().buildItemStack();
+                entry.getValue().writeToItemStackNBT();
                 if (entry.getValue().getItemRecipe() != null)
                     entry.getValue().buildItemRecipe();
-                entry.getValue().writeToItemStackNBT();
             }
         }
     }
@@ -53,7 +53,7 @@ public class Handler {
             return null;
         NBTTagCompound compound = nmsStack.getTag();
         String itemKey = compound.getString("ItemKey");
-        return items.get(itemKey).clone();
+        return items.containsKey(itemKey) ? items.get(itemKey).clone() : null;
     }
 
 

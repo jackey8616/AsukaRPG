@@ -4,6 +4,7 @@ import info.clo5de.asukarpg.AsukaRPG;
 import info.clo5de.asukarpg.item.ExEnchant;
 import info.clo5de.asukarpg.item.MeowItem;
 import info.clo5de.asukarpg.player.AsukaPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +28,7 @@ public class ExEnchantListener implements Listener {
 
     @EventHandler
     public void onPlayerDamage (EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player && this.playerHandler.containsPlayer((Player) event.getDamager())) {
+        if (event.getDamager() instanceof CraftPlayer && this.playerHandler.containsPlayer((Player) event.getDamager())) {
             // Player attacked other.
             AsukaPlayer attacker = this.playerHandler.getPlayer((Player) event.getDamager());
             MeowItem itemStackMainHand = this.itemHandler.getItemFromNBT(attacker.getItemInMainHand());
@@ -36,7 +37,7 @@ public class ExEnchantListener implements Listener {
             if (itemStackMainHand == null)// || itemStackOffHand != null) {
                 return;
             onAttack(attacker, event);
-        } else if (event.getEntity() instanceof Player && this.playerHandler.containsPlayer((Player) event.getEntity())) {
+        } else if (event.getEntity() instanceof CraftPlayer && this.playerHandler.containsPlayer((Player) event.getEntity())) {
             // Player got damaged.
             AsukaPlayer defender = this.playerHandler.getPlayer((Player) event.getEntity());
             MeowItem itemStackMainHand = this.itemHandler.getItemFromNBT(defender.getItemInMainHand());
@@ -71,22 +72,22 @@ public class ExEnchantListener implements Listener {
 
     private void healWhenDamage (LivingEntity attacker, LivingEntity defender, double damage,
                                  Map<String, ExEnchant> map) {
-        double damagerHealth = attacker.getHealth();
+        double attackerHealth = attacker.getHealth();
         double victimHealth = defender.getHealth();
 
         if (map.containsKey("RESTORED_HP_HIT") && map.get("RESTORED_HP_HIT").isTriggered()) {
-            damagerHealth += map.get("RESOTRED_HP_HIT").getEffect();
+            attackerHealth += map.get("RESTORED_HP_HIT").getEffect();
         } else if (map.containsKey("RESTORED_HP_P_HIT") && map.get("RESTORED_HP_P_HIT").isTriggered()) {
-            damagerHealth *= (map.get("RESTORED_HP_P_HIT").getEffect() + 1.0D);
+            attackerHealth *= (map.get("RESTORED_HP_P_HIT").getEffect() + 1.0D);
         } else if (map.containsKey("RESTORED_HP_VAMPIRE") && map.get("#RESTORED_HP_VAMPIRE").isTriggered()) {
             double effectValue = damage * map.get("RESTORED_HP_VAMPIRE").getEffect();
-            damagerHealth += effectValue;
+            attackerHealth += effectValue;
             victimHealth -= effectValue;
-            defender.setHealth(victimHealth);
+            defender.setHealth(victimHealth > defender.getMaxHealth() ? defender.getMaxHealth() : victimHealth);
         } else {
             return;
         }
-        attacker.setHealth(damagerHealth);
+        attacker.setHealth(attackerHealth > attacker.getMaxHealth() ? attacker.getMaxHealth() : attackerHealth);
     }
 
     private void flyyyyyyyyyyyyyyyyyyyyyyyOut (LivingEntity defender, Map<String, ExEnchant> map) {
