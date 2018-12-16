@@ -10,7 +10,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.powermock.api.mockito.PowerMockito.*;
+import static org.powermock.api.mockito.PowerMockito.spy;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ ExEnchant.class })

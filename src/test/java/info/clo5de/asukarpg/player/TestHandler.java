@@ -12,9 +12,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.util.HashMap;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.spy;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
+import static org.powermock.api.mockito.PowerMockito.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ Handler.class })

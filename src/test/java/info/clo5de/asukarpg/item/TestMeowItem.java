@@ -2,8 +2,10 @@ package info.clo5de.asukarpg.item;
 
 import info.clo5de.asukarpg.AsukaRPG;
 import info.clo5de.asukarpg.TestAsukaRPGBuilder;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemFactory;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPluginLoader;
@@ -18,7 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.powermock.api.mockito.PowerMockito.*;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ CraftItemFactory.class, JavaPluginLoader.class, PluginDescriptionFile.class })
+@PrepareForTest({ net.minecraft.server.v1_12_R1.ItemStack.class, CraftItemStack.class,
+        MeowItem.class, CraftItemFactory.class, JavaPluginLoader.class, PluginDescriptionFile.class })
 @PowerMockIgnore({"javax.management.*"})
 public class TestMeowItem {
 
@@ -136,6 +139,25 @@ public class TestMeowItem {
         assertThat(clone.getItemEnchant().equals(asukaItem.getItemEnchant())).isTrue();
         assertThat(clone.getItemRecipe().equals(asukaItem.getItemRecipe())).isTrue();
         assertThat(clone.getItemStack().getType().equals(asukaItem.getMaterial())).isTrue();
+    }
+
+    @Test
+    public void testWriteToItemStackNBT () throws Exception {
+        mockStatic(CraftItemStack.class);
+        net.minecraft.server.v1_12_R1.ItemStack mockNMS = mock(net.minecraft.server.v1_12_R1.ItemStack.class);
+        when(CraftItemStack.asNMSCopy(asukaItem.getItemStack())).thenReturn(mockNMS);
+        NBTTagCompound mockNBT = spy(new NBTTagCompound());
+        whenNew(NBTTagCompound.class).withNoArguments().thenReturn(mockNBT);
+
+        when(mockNMS.hasTag()).thenReturn(false);
+        asukaItem.writeToItemStackNBT();
+        assertThat(mockNBT.getString("ItemKey")).isEqualTo(asukaItem.getItemKey());
+
+        mockNBT = spy(new NBTTagCompound());
+        when(mockNMS.getTag()).thenReturn(mockNBT);
+        when(mockNMS.hasTag()).thenReturn(true);
+        asukaItem.writeToItemStackNBT();
+        assertThat(mockNBT.getString("ItemKey")).isEqualTo(asukaItem.getItemKey());
     }
 
 }

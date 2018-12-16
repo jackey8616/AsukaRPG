@@ -10,7 +10,7 @@ public class Ingredient {
         return new Ingredient(ItemID.AIR(), null, 0);
     }
 
-    public static Ingredient fromConfig (String configString) {
+    public static Ingredient fromConfig (String configString) throws Exception {
         String[] split = configString.split(" ");
         if (split[0].startsWith("I:")) { // MeowItem
             MeowItem meowItem = AsukaRPG.INSTANCE.getItemHandler().getItemByKey(

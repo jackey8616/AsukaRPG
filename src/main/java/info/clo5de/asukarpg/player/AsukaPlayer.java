@@ -43,7 +43,7 @@ public class AsukaPlayer {
     public void onEquip (MeowItem meowItem) {
         Set<Map.Entry<String, ExEnchant>> set = meowItem.getItemExEnchant().toEntrySet();
         for (Map.Entry<String, ExEnchant> each : set) {
-            if (exEnchantMap.containsKey(each.getKey())) {
+            if (!exEnchantMap.containsKey(each.getKey())) {
                 exEnchantMap.put(each.getKey(), each.getValue());
             } else {
                 ExEnchant exEnchant = exEnchantMap.get(each.getKey());

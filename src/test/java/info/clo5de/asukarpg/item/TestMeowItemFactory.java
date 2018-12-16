@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TestMeowItemFactory {
 
     @Test
-    public void testFromConfig () {
+    public void testFromConfig () throws Exception {
         MemorySection asukaConfig = (MemorySection) YamlConfiguration.loadConfiguration(new File(
                 Resources.getResource("test_server_folder/plugins/AsukaRPG/item/AsukaTest.yml").getFile())
         ).get("AsukaRPG");
@@ -23,7 +23,7 @@ public class TestMeowItemFactory {
     }
 
     @Test
-    public void testFromKycConfig () {
+    public void testFromKycConfig () throws Exception {
         MemorySection kycConfig = (MemorySection) YamlConfiguration.loadConfiguration(new File(
                 Resources.getResource("test_server_folder/plugins/AsukaRPG/item/KycTest.yml").getFile())
         ).get("CustomCrafterEx");

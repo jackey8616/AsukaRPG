@@ -1,9 +1,8 @@
 package info.clo5de.asukarpg.player;
 
 import info.clo5de.asukarpg.AsukaRPG;
-import info.clo5de.asukarpg.item.ExEnchant;
+import info.clo5de.asukarpg.item.*;
 import info.clo5de.asukarpg.item.Handler;
-import info.clo5de.asukarpg.item.MeowItemFactory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -78,6 +77,24 @@ public class TestAsukaPlayer {
     @Test
     public void testGetExEnchantMap () {
         assertThat(asukaPlayer.getExEnchantMap()).isEqualTo(spyMap);
+    }
+
+    @Test
+    public void testOnEquip () {
+        ExEnchant ADD_CRITI_A = spy(new ExEnchant("ADD_CRITI", 50.0D, 25.0D));
+        Map<String, ExEnchant> mockMap = spy(new HashMap<>());
+        mockMap.put("ADD_CRITI", ADD_CRITI_A);
+        ItemExEnchant mockItemExEnchant = mock(ItemExEnchant.class);
+        when(mockItemExEnchant.toEntrySet()).thenAnswer(answer -> mockMap.entrySet());
+        MeowItem mockItem = mock(MeowItem.class);
+        when(mockItem.getItemExEnchant()).thenReturn(mockItemExEnchant);
+
+        asukaPlayer.onEquip(mockItem);
+        assertThat(spyMap.get("ADD_CRITI").getAbility()).isEqualTo(50.0D);
+        assertThat(spyMap.get("ADD_CRITI").getEffect()).isEqualTo(25.0D);
+        asukaPlayer.onEquip(mockItem);
+        assertThat(spyMap.get("ADD_CRITI").getAbility()).isEqualTo(2500.0D);
+        assertThat(spyMap.get("ADD_CRITI").getEffect()).isEqualTo(625.0D);
     }
 
 }

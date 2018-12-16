@@ -1,6 +1,7 @@
 package info.clo5de.asukarpg.item;
 
 import info.clo5de.asukarpg.AsukaRPG;
+import info.clo5de.asukarpg.exception.ItemConfigException;
 import info.clo5de.asukarpg.utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -56,11 +57,10 @@ public class TestItemRecipe {
         itemRecipe = ItemRecipe.fromKycConfig("Key", list);
     }
 
-    @Test
-    public void testFromConfig () {
-        assertThat(ItemRecipe.fromKycConfig("string", null)).isNull();
-        assertThat(ItemRecipe.fromKycConfig("string", new ArrayList<String>())).isNull();
-
+    @Test(expected = ItemConfigException.class)
+    public void testFromConfig () throws Exception {
+        ItemRecipe.fromKycConfig("string", null);
+        ItemRecipe.fromKycConfig("string", new ArrayList<String>());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package info.clo5de.asukarpg.item;
 
 import info.clo5de.asukarpg.AsukaRPG;
+import info.clo5de.asukarpg.exception.ItemConfigException;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -11,7 +12,7 @@ import static org.bukkit.Bukkit.getServer;
 
 public class ItemRecipe {
 
-    public static ItemRecipe fromKycConfig (String itemKey, List list) {
+    public static ItemRecipe fromKycConfig (String itemKey, List list) throws Exception {
         if (list != null && list.size() != 0) {
             Ingredient[] ingredients = {
                     Ingredient.AIR(), Ingredient.AIR(), Ingredient.AIR(),
@@ -29,7 +30,7 @@ public class ItemRecipe {
             }
             return new ItemRecipe(itemKey, ingredients, isMultistackRecipe);
         }
-        return null;
+        throw new ItemConfigException(ItemConfigException.Action.READ, ItemConfigException.Stage.ItemRecipe, itemKey);
     }
 
     private boolean isConverted;

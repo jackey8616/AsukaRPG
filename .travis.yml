@@ -17,7 +17,7 @@ before_install:
 
 # Set the final name using pom-fu
 install:
-  - mvn clean cobertura:cobertura
+  - travis_retry mvn clean cobertura:cobertura
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -cF unittests

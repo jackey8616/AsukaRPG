@@ -1,5 +1,6 @@
 package info.clo5de.asukarpg.item;
 
+import info.clo5de.asukarpg.exception.ItemConfigException;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.junit.BeforeClass;
@@ -31,16 +32,18 @@ public class TestItemID {
         assertThat(air.getSubId()).isEqualTo((byte) 0);
     }
 
-    @Test
-    public void testFromConfig () {
-        ItemID itemID = null;
-
+    @Test(expected = ItemConfigException.class)
+    public void testFromConfigNull () throws Exception {
         // id
-        itemID = ItemID.fromConfig("id");
-        assertThat(itemID).isEqualTo(null);
+        ItemID.fromConfig("id");
         // id:sub_id
-        itemID = ItemID.fromConfig("id:sub_id");
-        assertThat(itemID).isEqualTo(null);
+        ItemID.fromConfig("id:sub_id");
+    }
+
+    @Test
+    public void testFromConfig () throws Exception {
+        ItemID itemID;
+
         // stone
         itemID = ItemID.fromConfig("stone");
         assertThat(itemID.getMaterial()).isEqualByComparingTo(Material.STONE);

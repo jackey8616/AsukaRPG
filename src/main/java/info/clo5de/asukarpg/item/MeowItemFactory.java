@@ -1,5 +1,6 @@
 package info.clo5de.asukarpg.item;
 
+import info.clo5de.asukarpg.exception.ItemConfigException;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -9,7 +10,7 @@ import java.util.Map;
 
 public class MeowItemFactory {
 
-    public static MeowItem fromConfig(String itemKey, MemorySection config) {
+    public static MeowItem fromConfig(String itemKey, MemorySection config) throws Exception {
         String displayName = config.getString("DisplayName");
         ItemID itemID = ItemID.fromConfig(config.getString("ItemID"));
         ItemColor itemColor = ItemColor.fromConfig(config);
@@ -27,7 +28,7 @@ public class MeowItemFactory {
                 itemExEnchant, itemRecipe, quantity, canCraft, unbreakable, hideEnchants);
     }
 
-    public static MeowItem fromKycConfig(String displayName, MemorySection config) {
+    public static MeowItem fromKycConfig(String displayName, MemorySection config) throws Exception {
         String itemKey = config.getString("ItemKey");
         ItemID itemID = ItemID.fromConfig(config.getString("ItemID"));
         ItemColor itemColor = ItemColor.fromKycConfig(config);
@@ -55,8 +56,16 @@ public class MeowItemFactory {
         } else {
             MemorySection config = (MemorySection) yaml.get("AsukaRPG");
             Map<String, MeowItem> stacks = new HashMap<>();
-            for (String itemKey : config.getKeys(false))
-                stacks.put(itemKey, fromConfig(itemKey, (MemorySection) config.get(itemKey)));
+            for (String itemKey : config.getKeys(false)) {
+                try {
+                    stacks.put(itemKey, fromConfig(itemKey, (MemorySection) config.get(itemKey)));
+                } catch (ItemConfigException exception) {
+                    String message = "ItemKey: %s 's file has error, aborted!. ACTION: %s, STAGE: %s";
+                    System.err.println(String.format(message, itemKey, exception.getAction(), exception.getStage()));
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
             return stacks;
         }
     }
@@ -66,7 +75,14 @@ public class MeowItemFactory {
         for (String displayName : config.getKeys(false)) {
             MemorySection fileConfig = (MemorySection) config.get(displayName);
             String itemKey = fileConfig.getString("ItemKey");
-            stacks.put(itemKey, fromKycConfig(displayName, fileConfig));
+            try {
+                stacks.put(itemKey, fromKycConfig(displayName, fileConfig));
+            } catch (ItemConfigException exception) {
+                String message = "ItemKey: %s 's file has error, aborted!. ACTION: %s, STAGE: %s";
+                System.err.println(String.format(message, itemKey, exception.getAction(), exception.getStage()));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
         return stacks;
     }

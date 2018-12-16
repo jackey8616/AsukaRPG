@@ -2,6 +2,7 @@ package info.clo5de.asukarpg.item;
 
 import com.google.common.primitives.Ints;
 import info.clo5de.asukarpg.AsukaRPG;
+import info.clo5de.asukarpg.exception.ItemConfigException;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,7 +12,7 @@ public class ItemID {
         return new ItemID(Material.AIR, (byte)0);
     }
 
-    public static ItemID fromConfig (String configString) {
+    public static ItemID fromConfig (String configString) throws Exception {
         String[] idAndSub = configString.split(":");
         String id = idAndSub[0];
         byte subId = 0;
@@ -25,12 +26,10 @@ public class ItemID {
             return new ItemID(Integer.valueOf(id), subId);
         } else {
             Material material = Material.matchMaterial(id);
-            if (material != null) {
+            if (material != null)
                 return new ItemID(material, subId);
-            } else {
-                AsukaRPG.logger.warning(String.format("No match ID: %s, aborted.", id));
-                return null;
-            }
+            AsukaRPG.logger.warning(String.format("No match ID: %s, aborted.", id));
+            throw new ItemConfigException(ItemConfigException.Action.READ, ItemConfigException.Stage.ItemID, id);
         }
     }
 
