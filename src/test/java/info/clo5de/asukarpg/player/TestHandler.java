@@ -51,11 +51,13 @@ public class TestHandler {
     @Test
     public void testGetPlayer () {
         assertThat(playerHandler.getPlayer(player)).isEqualTo(asukaPlayer);
+        assertThat(playerHandler.getPlayer(player.getUniqueId())).isEqualTo(asukaPlayer);
     }
 
     @Test
     public void testContainsPlayer () {
         assertThat(playerHandler.containsPlayer(player)).isTrue();
+        assertThat(playerHandler.containsPlayer(player.getUniqueId())).isTrue();
         assertThat(playerHandler.containsPlayer(mock(Player.class))).isFalse();
     }
 

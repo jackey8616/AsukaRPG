@@ -1,21 +1,16 @@
 package info.clo5de.asukarpg.item;
 
+import info.clo5de.asukarpg.AsukaRPG;
+import info.clo5de.asukarpg.utils;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.powermock.api.mockito.PowerMockito.spy;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({ ExEnchant.class })
-@PowerMockIgnore({"javax.management.*"})
 public class TestExEnchant {
 
     private static Random mockRandom;
@@ -24,7 +19,7 @@ public class TestExEnchant {
     @BeforeClass
     public static void setup () throws Exception {
         mockRandom = spy(new Random());
-        whenNew(Random.class).withNoArguments().thenReturn(mockRandom);
+        utils.setFinalStatic(AsukaRPG.class.getField("random"), mockRandom);
 
         ex = new ExEnchant("TEST1", 0);
         ex1 = new ExEnchant("TEST2", 3, 4);
@@ -64,7 +59,14 @@ public class TestExEnchant {
         assertThat(ex1.getEffect()).isEqualTo(6.0D);
     }
 
-    //@Test
-    public void testIsTriggered () { }
+    @Test
+    public void testIsTriggered () {
+        ex1.setAbility(0.5D);
+        when(mockRandom.nextDouble()).thenReturn(0.4D);
+        assertThat(ex1.isTriggered()).isTrue();
+
+        when(mockRandom.nextDouble()).thenReturn(0.6D);
+        assertThat(ex1.isTriggered()).isFalse();
+    }
 
 }

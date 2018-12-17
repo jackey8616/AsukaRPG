@@ -1,6 +1,6 @@
 package info.clo5de.asukarpg.item;
 
-import java.util.Random;
+import info.clo5de.asukarpg.AsukaRPG;
 
 public class ExEnchant {
 
@@ -51,6 +51,6 @@ public class ExEnchant {
     }
 
     public boolean isTriggered () {
-        return new Random().nextDouble() <= this.ability;
+        return AsukaRPG.random.nextDouble() <= this.ability;
     }
 }

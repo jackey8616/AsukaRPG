@@ -102,5 +102,9 @@ public class TestHandler {
         when(mockNMS.getTag()).thenReturn(mockNBT);
         when(mockNMS.hasTag()).thenReturn(true);
         assertThat(handler.getItemFromNBT(asukaStack)).isEqualTo(asukaItem);
+
+        when(mockNMS.hasTag()).thenReturn(true);
+        when(mockNBT.getString("ItemKey")).thenReturn("null");
+        assertThat(handler.getItemFromNBT(asukaStack)).isNull();
     }
 }

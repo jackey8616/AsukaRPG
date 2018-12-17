@@ -12,11 +12,13 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Logger;
 
 public class AsukaRPG extends JavaPlugin {
 
     public static final Logger logger = Logger.getLogger("Minecraft.Asuka.RPG");
+    public static Random random = new Random();
     public static AsukaRPG INSTANCE;
 
     private ArmorListener armorListener;
