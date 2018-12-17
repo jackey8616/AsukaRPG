@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -145,7 +146,7 @@ public class TestMeowItem {
     public void testWriteToItemStackNBT () throws Exception {
         mockStatic(CraftItemStack.class);
         net.minecraft.server.v1_12_R1.ItemStack mockNMS = mock(net.minecraft.server.v1_12_R1.ItemStack.class);
-        when(CraftItemStack.asNMSCopy(asukaItem.getItemStack())).thenReturn(mockNMS);
+        when(CraftItemStack.asNMSCopy(Mockito.any(ItemStack.class))).thenReturn(mockNMS);
         NBTTagCompound mockNBT = spy(new NBTTagCompound());
         whenNew(NBTTagCompound.class).withNoArguments().thenReturn(mockNBT);
 

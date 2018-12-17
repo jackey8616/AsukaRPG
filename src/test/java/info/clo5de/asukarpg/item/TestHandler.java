@@ -86,7 +86,7 @@ public class TestHandler {
     }
 
     @Test
-    public void testWriteToItemStackNBT () {
+    public void testGetItemFromNBT () {
         mockStatic(CraftItemStack.class);
         net.minecraft.server.v1_12_R1.ItemStack mockNMS = mock(net.minecraft.server.v1_12_R1.ItemStack.class);
         when(CraftItemStack.asNMSCopy(Mockito.any(ItemStack.class))).thenReturn(mockNMS);
