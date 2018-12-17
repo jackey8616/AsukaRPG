@@ -1,0 +1,57 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+    <id>with-dependencies</id>
+
+    <formats>
+        <format>jar</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>.</outputDirectory>
+            <useProjectArtifact>true</useProjectArtifact>
+            <unpack>true</unpack>
+            <includes>
+                <include>com.github.Arnuh:ArmorEquipEvent</include>
+            </includes>
+        </dependencySet>
+    </dependencySets>
+
+    <fileSets>
+        <fileSet>
+            <directory>${project.basedir}/../api/target/classes</directory>
+            <outputDirectory>.</outputDirectory>
+            <includes>
+                <include>/info/clo5de/asukarpg/**/*.class</include>
+                <include>/**/*.yml</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/../plugin/target/classes</directory>
+            <outputDirectory>.</outputDirectory>
+            <includes>
+                <include>/info/clo5de/asukarpg/**/*.class</include>
+                <include>/**/*.yml</include>
+                </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/../v1_12_R1/target/classes</directory>
+            <outputDirectory>.</outputDirectory>
+            <includes>
+                <include>/info/clo5de/asukarpg/**/*.class</include>
+                <include>/**/*.yml</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/../v1_11_R1/target/classes</directory>
+            <outputDirectory>.</outputDirectory>
+            <includes>
+                <include>/info/clo5de/asukarpg/**/*.class</include>
+                <include>/**/*.yml</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+
+</assembly>

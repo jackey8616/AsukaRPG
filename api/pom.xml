@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>info.clo5de</groupId>
+    <artifactId>asukarpg-api</artifactId>
+    <packaging>jar</packaging>
+    <version>api</version>
+
+    <parent>
+        <artifactId>AsukaRPG</artifactId>
+        <groupId>info.clo5de</groupId>
+        <version>parent</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>provided</scope> <!-- The 'provided' scope will NOT get shaded in -->
+        </dependency>
+    </dependencies>
+
+</project>
