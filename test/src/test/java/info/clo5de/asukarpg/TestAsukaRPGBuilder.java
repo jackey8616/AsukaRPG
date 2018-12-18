@@ -1,7 +1,7 @@
 package info.clo5de.asukarpg;
 
-import info.clo5de.asukarpg.item.ItemHandler;
 import info.clo5de.asukarpg.event.WorkbenchCraftingListener;
+import info.clo5de.asukarpg.item.ItemHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;

@@ -2,6 +2,7 @@ package info.clo5de.asukarpg.item;
 
 import info.clo5de.asukarpg.AsukaRPG;
 import info.clo5de.asukarpg.utils;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -21,6 +22,11 @@ public class TestExEnchant {
         mockRandom = spy(new Random());
         utils.setFinalStatic(AsukaRPG.class.getField("random"), mockRandom);
 
+        new TestExEnchant().resetAll();
+    }
+
+    @Before
+    public void resetAll () {
         ex = new ExEnchant("TEST1", 0);
         ex1 = new ExEnchant("TEST2", 3, 4);
         ex2 = new ExEnchant("TEST3", 0.0005, 0.0004);

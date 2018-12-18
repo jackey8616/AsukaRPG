@@ -8,9 +8,21 @@
             <include name="cobertura*.jar"/>
             <include name="lib/**/*.jar"/>
         </fileset>
-        <fileset dir="${user.home}/.m2/repository/org/slf4j">
-            <include name="**/*.jar"/>
-        </fileset>
+        <fileset dir="${user.home}/.m2/repository/ch/qos/logback/logback-core/1.0.13/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/ch/qos/logback/logback-classic/1.0.13/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/jaxen/jaxen/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/junit/junit/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/org/apache/commons/commons-lang3/3.1/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/org/hamcrest/hamcrest-core/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/org/mortbay/jetty/jetty/6.1.14/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/org/mortbay/jetty/jetty-util/6.1.14/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/org/slf4j/slf4j-api/1.7.5/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/oro/oro/2.0.8/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/org/ow2/asm/asm/5.0.1/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/org/ow2/asm/asm-analysis/5.0.1/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/org/ow2/asm/asm-commons/5.0.1/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/org/ow2/asm/asm-tree/5.0.1/" includes="*.jar"/>
+        <fileset dir="${user.home}/.m2/repository/org/ow2/asm/asm-util/5.0.1/" includes="*.jar"/>
     </path>
     <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
 
