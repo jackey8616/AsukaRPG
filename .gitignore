@@ -7,6 +7,8 @@ target/
 BuildTool/
 bin/
 logs/
+target/
 
 hs_err_*.log
+*.ser
 AsukaRPG.iml

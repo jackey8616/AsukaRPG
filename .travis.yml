@@ -5,6 +5,7 @@ language: java
 cache:
   directories:
     - $HOME/.m2
+    - $HOME/spigot-build/history
 
 before_install:
   - ./installSpigot.sh 1.13

@@ -8,7 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -28,7 +27,7 @@ import static org.powermock.api.mockito.PowerMockito.*;
 @PrepareForTest({ ItemNMSHandler.class, CraftItemStack.class, net.minecraft.server.v1_12_R1.ItemStack.class,
         info.clo5de.asukarpg.item.ItemHandler.class, AsukaRPG.class, MeowItemFactory.class })
 @PowerMockIgnore({"javax.management.*"})
-public class TestHandler {
+public class TestItemHandler {
 
     private static AsukaRPG asukaRPG;
 
@@ -80,18 +79,15 @@ public class TestHandler {
 
     @Test
     public void testGetItemMap() {
-        //assertThat(handler.getItemMap().size()).isEqualTo(2);
-        System.out.println(handler.getItemMap().size());
+        assertThat(handler.getItemMap().size()).isEqualTo(2);
     }
 
     @Test
     public void testGetItemByKey() {
-        //assertThat(handler.getItemByKey("ItemAsukaTestKey")).isNotNull();
-        System.out.println(handler.getItemByKey("ItemAsukaTestKey"));
+        assertThat(handler.getItemByKey("ItemAsukaTestKey")).isNotNull();
         assertThat(handler.getItemByKey("ItemKycTestKey")).isNotNull();
     }
 
-    @Ignore
     @Test
     public void testGetItemFromNBT () {
         mockStatic(CraftItemStack.class);

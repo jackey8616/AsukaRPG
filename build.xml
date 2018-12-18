@@ -46,7 +46,10 @@
 
     <target name="report" depends="merge">
         <property name="src.dir" value="src/main/java/"/>
-        <cobertura-report srcdir="." datafile="sum.ser" format="html" destdir="./target/report">
+        <cobertura-report srcdir="." datafile="sum.ser" format="html" destdir="./target/report-html">
+            <fileset dir="./target/src/main/java"/>
+        </cobertura-report>
+        <cobertura-report srcdir="." datafile="sum.ser" format="xml" destdir="./target/report-xml">
             <fileset dir="./target/src/main/java"/>
         </cobertura-report>
     </target>
