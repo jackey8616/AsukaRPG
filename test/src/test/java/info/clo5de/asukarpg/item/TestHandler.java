@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.*;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ CraftItemStack.class, net.minecraft.server.v1_12_R1.ItemStack.class,
+@PrepareForTest({ ItemNMSHandler.class, CraftItemStack.class, net.minecraft.server.v1_12_R1.ItemStack.class,
         info.clo5de.asukarpg.item.ItemHandler.class, AsukaRPG.class, MeowItemFactory.class })
 @PowerMockIgnore({"javax.management.*"})
 public class TestHandler {
@@ -75,7 +75,6 @@ public class TestHandler {
         handler.load();
         verify(asukaItem, Mockito.times(1)).writeToItemStackNBT();
         verify(kycItem, Mockito.times(1)).writeToItemStackNBT();
-
     }
 
     @Test

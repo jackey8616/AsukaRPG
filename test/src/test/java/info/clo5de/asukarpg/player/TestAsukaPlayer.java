@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.*;
 
@@ -39,9 +38,9 @@ public class TestAsukaPlayer {
         asukaPlayer = new AsukaPlayer(player);
     }
 
-    //@Test
+    @Test(expected = NullPointerException.class)
     public void testContructor () {
-        given(new AsukaPlayer(null)).willThrow(new NullPointerException("The validated object is null"));
+        new AsukaPlayer(null);
     }
 
     @Test

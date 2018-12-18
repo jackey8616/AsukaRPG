@@ -15,12 +15,12 @@
     <modules>
         <module>plugin</module>
         <module>api</module>
+        <module>test</module>
+        <module>v1_13_R1</module>
         <module>v1_12_R1</module>
         <module>v1_11_R1</module>
-        <module>v1_13_R1</module>
     </modules>
 
-    <!-- Define the repo here since multiple modules will be using it -->
     <repositories>
         <repository>
             <id>spigot-repo</id>
@@ -29,26 +29,39 @@
     </repositories>
 
     <build>
-        <plugins>
-            <!--cobertura-maven-plugin-->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <formats>
-                        <format>html</format>
-                        <format>xml</format>
-                    </formats>
-                    <check />
-                    <instrumentation>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.6.0</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
                         <excludes>
-                            <exclude>info/clo5de/asukarpg/utils/Metrics*.class</exclude>
-                            <exclude>info/clo5de/asukarpg/feature/**/*.class</exclude>
+                            <exclude>info/clo5de/asukarpg/feature/**/*</exclude>
                         </excludes>
-                    </instrumentation>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>.</directory>
+                            <includes>
+                                <include>**/*.ser</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
 </project>

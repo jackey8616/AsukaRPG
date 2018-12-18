@@ -1,23 +1,21 @@
-# Travis build script for mineman
-
-# Use new container infrastructure to enable caching
 sudo: false
 
-# Use Maven
 language: java
 
-# Caching so the next build will be fast too.
 cache:
   directories:
     - $HOME/.m2
 
-# Only re-download spigot if we don't have spigot in the repo
 before_install:
-  - if [ ! -d "$HOME/.m2/repository/org/spigotmc" ]; then ./installSpigot.sh 1.12.2 ; else echo "Not compiling Spigot because it is already in our maven" ; fi
+  - ./installSpigot.sh 1.13
+  - ./installSpigot.sh 1.12.2
+  - ./installSpigot.sh 1.11.2
 
-# Set the final name using pom-fu
 install:
-  - travis_retry mvn clean cobertura:cobertura
+  - mvn clean compile
+  - ant instrument
+  - travis_retry mvn test
+  - ant report
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -cF unittests

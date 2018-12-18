@@ -1,0 +1,62 @@
+<project>
+
+    <property environment="env"/>
+    <property name="COBERTURA_HOME" value="${user.home}/.m2/repository/net/sourceforge/cobertura/cobertura/2.1.1/"/>
+    <property name="cobertura.dir" value="${COBERTURA_HOME}"/>
+    <path id="cobertura.classpath">
+        <fileset dir="${cobertura.dir}">
+            <include name="cobertura*.jar"/>
+            <include name="lib/**/*.jar"/>
+        </fileset>
+        <fileset dir="${user.home}/.m2/repository/org/slf4j">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+    <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
+
+    <target name="instrument">
+        <antcall target="instrumentAModule">
+            <param name="module" value="api"/>
+        </antcall>
+        <antcall target="instrumentAModule">
+            <param name="module" value="plugin"/>
+        </antcall>
+        <antcall target="instrumentAModule">
+            <param name="module" value="v1_13_R1"/>
+        </antcall>
+        <antcall target="instrumentAModule">
+            <param name="module" value="v1_12_R1"/>
+        </antcall>
+        <antcall target="instrumentAModule">
+            <param name="module" value="v1_11_R1"/>
+        </antcall>
+    </target>
+
+    <target name="report" depends="merge">
+        <property name="src.dir" value="src/main/java/"/>
+        <cobertura-report srcdir="." datafile="sum.ser" format="html" destdir="./target/report">
+            <fileset dir="./target/src/main/java"/>
+        </cobertura-report>
+    </target>
+
+    <target name="merge">
+        <cobertura-merge datafile="sum.ser">
+            <fileset dir=".">
+                <include name="**/cobertura.ser"/>
+            </fileset>
+        </cobertura-merge>
+    </target>
+
+    <target name="instrumentAModule">
+        <property name="classes.dir" value="target/classes"/>
+        <cobertura-instrument datafile="./${module}/target/cobertura.ser">
+            <fileset dir="./${module}/target/classes">
+                <include name="info/clo5de/asukarpg/*.class"/>
+                <include name="info/clo5de/asukarpg/**/*.class"/>
+                <exclude name="info/clo5de/asukarpg/utils/Metrics*"/>
+            </fileset>
+        </cobertura-instrument>
+        <copydir src="./${module}/src/main/java" dest="./target/src/main/java"/>
+    </target>
+
+</project>
