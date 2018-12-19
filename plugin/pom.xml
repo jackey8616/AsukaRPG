@@ -107,7 +107,7 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <excludes>
-                        <exclude>info/clo5de/asukarpg/feature/**/*</exclude>
+                        <exclude>info/clo5de/asuka/rpg/feature/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

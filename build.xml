@@ -66,9 +66,9 @@
         <property name="classes.dir" value="target/classes"/>
         <cobertura-instrument datafile="./${module}/target/cobertura.ser">
             <fileset dir="./${module}/target/classes">
-                <include name="info/clo5de/asukarpg/*.class"/>
-                <include name="info/clo5de/asukarpg/**/*.class"/>
-                <exclude name="info/clo5de/asukarpg/utils/Metrics*"/>
+                <include name="info/clo5de/asuka/rpg/*.class"/>
+                <include name="info/clo5de/asuka/rpg/**/*.class"/>
+                <exclude name="info/clo5de/asuka/rpg/utils/Metrics*"/>
             </fileset>
         </cobertura-instrument>
         <copydir src="./${module}/src/main/java" dest="./target/src/main/java"/>

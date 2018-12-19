@@ -24,7 +24,7 @@
             <directory>${project.basedir}/../api/target/classes</directory>
             <outputDirectory>.</outputDirectory>
             <includes>
-                <include>/info/clo5de/asukarpg/**/*.class</include>
+                <include>/info/clo5de/asuka/rpg**/*.class</include>
                 <include>/**/*.yml</include>
             </includes>
         </fileSet>
@@ -32,7 +32,7 @@
             <directory>${project.basedir}/../plugin/target/classes</directory>
             <outputDirectory>.</outputDirectory>
             <includes>
-                <include>/info/clo5de/asukarpg/**/*.class</include>
+                <include>/info/clo5de/asuka/rpg**/*.class</include>
                 <include>/**/*.yml</include>
                 </includes>
         </fileSet>
@@ -40,7 +40,7 @@
             <directory>${project.basedir}/../v1_12_R1/target/classes</directory>
             <outputDirectory>.</outputDirectory>
             <includes>
-                <include>/info/clo5de/asukarpg/**/*.class</include>
+                <include>/info/clo5de/asuka/rpg**/*.class</include>
                 <include>/**/*.yml</include>
             </includes>
         </fileSet>
@@ -48,7 +48,7 @@
             <directory>${project.basedir}/../v1_11_R1/target/classes</directory>
             <outputDirectory>.</outputDirectory>
             <includes>
-                <include>/info/clo5de/asukarpg/**/*.class</include>
+                <include>/info/clo5de/asuka/rpg**/*.class</include>
                 <include>/**/*.yml</include>
             </includes>
         </fileSet>
