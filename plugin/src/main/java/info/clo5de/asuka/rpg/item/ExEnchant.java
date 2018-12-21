@@ -8,7 +8,7 @@ public class ExEnchant {
     private double ability, effect;
 
     public ExEnchant (String name, double ability, double effect) {
-        System.out.println("NEW " + name + " " + ability);
+        //System.out.println("NEW " + name + " " + ability);
         this.name = name;
         this.ability = ability;
         this.effect = effect;

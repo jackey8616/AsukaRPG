@@ -112,14 +112,14 @@
                 </configuration>
             </plugin>
             <!--maven-jar-plugin-->
-            <!--plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
                     <outputDirectory>${output_dir}</outputDirectory>
                 </configuration>
-            </plugin-->
+            </plugin>
             <!--maven-assembly-plugin-->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>

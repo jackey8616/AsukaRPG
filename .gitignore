@@ -8,6 +8,7 @@ BuildTool/
 bin/
 logs/
 target/
+temp/
 
 hs_err_*.log
 *.ser

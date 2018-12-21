@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class MeowItem {
 
+    private String filePath;
     private String itemKey;
     private String displayName;
 
@@ -25,9 +26,10 @@ public class MeowItem {
     private boolean hideEnchants;
     private ItemStack itemStack;
 
-    public MeowItem (String itemKey, String displayName, ItemType itemType, ItemID itemID, ItemColor itemColor,
-                     ItemLore itemLore, ItemEnchant itemEnchant, ItemExEnchant itemExEnchant, ItemRecipe itemRecipe,
-                     int quantity, boolean canCraft, boolean unbreakable, boolean hideEnchants) {
+    public MeowItem (String filePath, String itemKey, String displayName, ItemType itemType, ItemID itemID,
+                     ItemColor itemColor, ItemLore itemLore, ItemEnchant itemEnchant, ItemExEnchant itemExEnchant,
+                     ItemRecipe itemRecipe, int quantity, boolean canCraft, boolean unbreakable, boolean hideEnchants) {
+        this.filePath = filePath;
         this.itemKey = itemKey;
         this.displayName = displayName;
 
@@ -72,6 +74,10 @@ public class MeowItem {
     public ItemMeta buildItemRecipe () {
         this.itemRecipe.buildItemRecipe(this.itemStack);
         return this.itemStack.getItemMeta();
+    }
+
+    public String getFilePath () {
+        return this.filePath;
     }
 
     public String getItemKey () {
@@ -123,9 +129,9 @@ public class MeowItem {
     }
 
     public MeowItem clone () {
-        MeowItem meowItem = new MeowItem(this.itemKey, this.displayName, this.itemType, this.itemID, this.itemColor,
-                this.itemLore, this.itemEnchant, this.itemExEnchant, this.itemRecipe, this.quantity, this.canCraft,
-                this.unbreakable, this.hideEnchants);
+        MeowItem meowItem = new MeowItem(this.filePath, this.itemKey, this.displayName, this.itemType, this.itemID,
+                this.itemColor, this.itemLore, this.itemEnchant, this.itemExEnchant, this.itemRecipe, this.quantity,
+                this.canCraft, this.unbreakable, this.hideEnchants);
         meowItem.itemStack = this.itemStack.clone();
         return meowItem;
     }

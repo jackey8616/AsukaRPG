@@ -53,7 +53,7 @@ public class TestMeowItem {
 
         mockID = PowerMockito.spy(new ItemID(Material.STONE, (byte) 0));
 
-        asukaItem = new MeowItem("ItemAsukaTestKey", "ItemAsukaTestName", itemType, mockID,
+        asukaItem = new MeowItem(null, "ItemAsukaTestKey", "ItemAsukaTestName", itemType, mockID,
                 mockColor, mockLore, mockEnchant, mockExEnchat,  mockRecipe, 1, true,
                 false, false);
     }

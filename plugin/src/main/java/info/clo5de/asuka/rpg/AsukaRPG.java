@@ -1,13 +1,13 @@
 package info.clo5de.asuka.rpg;
 
 import com.codingforcookies.armorequip.ArmorListener;
-import info.clo5de.asuka.rpg.recipe.Handler;
-import info.clo5de.asuka.rpg.version.v1_12_R1.item.ItemNMSHandler;
 import info.clo5de.asuka.rpg.event.ExEnchantListener;
 import info.clo5de.asuka.rpg.event.PlayerListener;
 import info.clo5de.asuka.rpg.event.WorkbenchCraftingListener;
 import info.clo5de.asuka.rpg.item.ItemHandler;
+import info.clo5de.asuka.rpg.recipe.Handler;
 import info.clo5de.asuka.rpg.utils.Metrics;
+import info.clo5de.asuka.rpg.version.v1_12_R1.item.ItemNMSHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -96,7 +96,7 @@ public class AsukaRPG extends JavaPlugin {
     }
 
     public void setMetrics () {
-        Metrics metrics = new Metrics(this);
+        new Metrics(this);
     }
 
     private void registerEvents() {
@@ -106,6 +106,10 @@ public class AsukaRPG extends JavaPlugin {
         pm.registerEvents(this.playerListener, this);
         pm.registerEvents(this.workbenchCraftingListener, this);
         pm.registerEvents(this.exEnchantListener, this);
+    }
+
+    public Logger logger () {
+        return logger;
     }
 
     public ConfigManager getConfigManager () {

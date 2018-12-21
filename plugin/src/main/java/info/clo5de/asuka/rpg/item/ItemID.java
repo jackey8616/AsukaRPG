@@ -1,7 +1,6 @@
 package info.clo5de.asuka.rpg.item;
 
 import com.google.common.primitives.Ints;
-import info.clo5de.asuka.rpg.AsukaRPG;
 import info.clo5de.asuka.rpg.exception.ItemConfigException;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -12,15 +11,16 @@ public class ItemID {
         return new ItemID(Material.AIR, (byte)0);
     }
 
-    public static ItemID fromConfig (String configString) throws Exception {
+    public static ItemID fromConfig (String configString) throws ItemConfigException {
+        if (configString == null)
+            throw new ItemConfigException(
+                    ItemConfigException.Action.READ, ItemConfigException.Stage.ItemID, "ItemID is required.");
         String[] idAndSub = configString.split(":");
         String id = idAndSub[0];
         byte subId = 0;
 
         if (idAndSub.length == 2 && Ints.tryParse(idAndSub[1]) != null)
             subId = Byte.parseByte(idAndSub[1]);
-        else
-            AsukaRPG.logger.warning(configString + " Missing subId, automatically set to 0");
 
         if (Ints.tryParse(id) != null) {
             return new ItemID(Integer.valueOf(id), subId);
@@ -28,8 +28,8 @@ public class ItemID {
             Material material = Material.matchMaterial(id);
             if (material != null)
                 return new ItemID(material, subId);
-            AsukaRPG.logger.warning(String.format("No match ID: %s, aborted.", id));
-            throw new ItemConfigException(ItemConfigException.Action.READ, ItemConfigException.Stage.ItemID, id);
+            String message = String.format("No match ID: %s, aborted.", id);
+            throw new ItemConfigException(ItemConfigException.Action.READ, ItemConfigException.Stage.ItemID, message);
         }
     }
 

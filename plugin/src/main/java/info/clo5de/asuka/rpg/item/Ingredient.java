@@ -2,6 +2,7 @@ package info.clo5de.asuka.rpg.item;
 
 import com.google.common.primitives.Ints;
 import info.clo5de.asuka.rpg.AsukaRPG;
+import info.clo5de.asuka.rpg.exception.ItemConfigException;
 import org.bukkit.Material;
 
 public class Ingredient {
@@ -10,7 +11,7 @@ public class Ingredient {
         return new Ingredient(ItemID.AIR(), null, 0);
     }
 
-    public static Ingredient fromConfig (String configString) throws Exception {
+    public static Ingredient fromConfig (String configString) throws ItemConfigException {
         String[] split = configString.split(" ");
         if (split[0].startsWith("I:")) { // MeowItem
             MeowItem meowItem = AsukaRPG.INSTANCE.getItemHandler().getItemByKey(

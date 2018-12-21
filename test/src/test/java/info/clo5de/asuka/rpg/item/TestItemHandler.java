@@ -17,7 +17,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -30,6 +32,7 @@ import static org.powermock.api.mockito.PowerMockito.*;
 public class TestItemHandler {
 
     private static AsukaRPG asukaRPG;
+    private static Logger mockLogger;
 
     private static File resourceFile, mockFile;
     private static MeowItem asukaItem, kycItem;
@@ -39,6 +42,7 @@ public class TestItemHandler {
     @BeforeClass
     public static void setup() throws Exception {
         asukaRPG = mock(AsukaRPG.class);
+        mockLogger = mock(Logger.class);
         itemNMSHandler = spy(new ItemNMSHandler());
 
         mockFile = mock(File.class);
@@ -46,6 +50,7 @@ public class TestItemHandler {
                 Resources.getResource("test_server_folder/plugins/AsukaRPG/item").getFile());
 
         when(mockFile.listFiles()).thenReturn(resourceFile.listFiles());
+        when(asukaRPG.logger()).thenReturn(mockLogger);
         whenNew(File.class).withParameterTypes(File.class, String.class).withArguments(
                 Mockito.eq(asukaRPG.getDataFolder()), Mockito.eq("item")).thenReturn(mockFile);
 
@@ -60,7 +65,7 @@ public class TestItemHandler {
         map.put(kycItem.getItemKey(), kycItem);
 
         mockStatic(MeowItemFactory.class);
-        when(MeowItemFactory.loadFromYaml(Mockito.any(File.class))).thenReturn(map);
+        when(MeowItemFactory.loadFromYaml(Mockito.any(HashSet.class), Mockito.any(File.class))).thenReturn(map);
 
         handler = new ItemHandler(asukaRPG, itemNMSHandler);
     }

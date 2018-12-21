@@ -12,7 +12,7 @@ import static org.bukkit.Bukkit.getServer;
 
 public class ItemRecipe {
 
-    public static ItemRecipe fromKycConfig (String itemKey, List list) throws Exception {
+    public static ItemRecipe fromKycConfig (String itemKey, List list) throws ItemConfigException {
         if (list != null && list.size() != 0) {
             Ingredient[] ingredients = {
                     Ingredient.AIR(), Ingredient.AIR(), Ingredient.AIR(),
@@ -30,7 +30,7 @@ public class ItemRecipe {
             }
             return new ItemRecipe(itemKey, ingredients, isMultistackRecipe);
         }
-        throw new ItemConfigException(ItemConfigException.Action.READ, ItemConfigException.Stage.ItemRecipe, itemKey);
+        return null;
     }
 
     private boolean isConverted;

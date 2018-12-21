@@ -7,7 +7,7 @@ public class ItemConfigException extends Exception {
     }
 
     public enum Stage {
-        ItemID, ItemRecipe
+        Root, ItemKey, ItemID
     }
 
     private Action action;
